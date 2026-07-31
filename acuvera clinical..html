@@ -1,0 +1,4377 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acuvera Clinical - Innovating Research, Ensuring Results</title>
+    <meta name="description"
+        content="Services indépendants de surveillance et coordination pour essais cliniques en Afrique" />
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #0055A4;
+            --accent-blue: #4A90E2;
+            --light-blue: #E8F4F8;
+            --dark-bg: #0a0e1a;
+            --light-bg: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-light: #f5f5f5;
+            --text-muted: #666666;
+            --gold-accent: #C9A961;
+            --gray-light: #f8f9fa;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --radius: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: #111827;
+            --text-primary: var(--text-light);
+            --text-secondary: #9ca3af;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--light-bg);
+            --bg-secondary: var(--gray-light);
+            --text-primary: var(--text-dark);
+            --text-secondary: var(--text-muted);
+            --card-bg: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== LOADER ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--primary-blue);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+            letter-spacing: 1px;
+        }
+
+        .loader-logo span {
+            color: var(--gold-accent);
+        }
+
+        .loader-bar {
+            width: 220px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            width: 100%;
+            height: 100%;
+            background: var(--gold-accent);
+            animation: load 2s ease-in-out forwards;
+        }
+
+        @keyframes load {
+            0% {
+                transform: scaleX(0);
+                transform-origin: left;
+            }
+
+            100% {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(var(--bg-primary), 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 5%;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 85, 164, 0.3);
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-icon {
+            box-shadow: 0 6px 20px rgba(0, 85, 164, 0.5);
+            transform: rotate(5deg);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: var(--gold-accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 4px;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn {
+            padding: 0.4rem 0.9rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-blue);
+            color: #fff;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .theme-toggle:hover::after {
+            transform: scale(1);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: var(--primary-blue);
+            color: #fff;
+            border-color: var(--primary-blue);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 1001;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .close-menu {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-menu ul a {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .mobile-menu ul a:hover {
+            color: var(--secondary-blue);
+            padding-left: 10px;
+        }
+
+        /* ===== HERO avec vidéo client ===== */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            /* Pas de filter ici — l'overlay hs-overlay-left gère l'assombrissement */
+        }
+
+        /* Fallback si la vidéo ne charge pas */
+        .hero-video-fallback {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            z-index: 0;
+        }
+
+        /* .hero-overlay déprécié — remplacé par .hs-overlay-left dans le nouveau hero */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 5%;
+            color: #fff;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInDown 1s ease;
+            transition: var(--transition);
+        }
+
+        .hero-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .hero-badge i {
+            color: var(--gold-accent);
+            animation: bounce 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            animation: fadeInUp 1s ease 0.2s both;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.4s both;
+            line-height: 1.8;
+        }
+
+        .hero-slogan {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-style: italic;
+            color: var(--gold-accent);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.6s both;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn:hover::after {
+            transform: translateX(0);
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator i {
+            color: #fff;
+            font-size: 2rem;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .scroll-indicator:hover i {
+            opacity: 1;
+            transform: translateY(5px);
+        }
+
+        /* ===== HERO MULTI-SLIDES — version premium ===== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+            min-height: 620px;
+        }
+
+        /* Chaque slide occupe tout l'espace */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 2;
+        }
+
+        /* Vidéo / image de fond */
+        .hero-video,
+        .hero-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-bg-img {
+            transform: scale(1.06);
+            transition: transform 9s ease;
+        }
+
+        .hero-slide.active .hero-bg-img {
+            transform: scale(1);
+        }
+
+        /* Overlay : grille médicale radiale + voile sombre "respirant" */
+        .hs-overlay-medical {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background-color: rgba(3, 15, 35, 0.7);
+            background-image:
+                radial-gradient(circle at center, rgba(3, 15, 35, 0.4) 0%, rgba(3, 15, 35, 0.85) 100%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-position: center center;
+            animation: breathe-overlay 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe-overlay {
+            0% {
+                background-color: rgba(3, 15, 35, 0.65);
+            }
+
+            100% {
+                background-color: rgba(3, 15, 35, 0.8);
+            }
+        }
+
+        /* Contenu texte — Centré */
+        .hero-slide-inner {
+            position: relative;
+            z-index: 3;
+            padding: 0 5%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            /* animation entrée */
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
+        }
+
+        .hero-slide.active .hero-slide-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Eyebrow (ligne au-dessus du H1) */
+        .hs-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            color: rgba(180, 215, 255, 0.9);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Titre H1 dans le hero */
+        .hs-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 5vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hs-title em {
+            font-style: italic;
+            color: #60c4ff;
+            display: block;
+        }
+
+        /* Sous-titre */
+        .hs-sub {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+            font-weight: 400;
+        }
+
+        /* Rangée de CTAs */
+        .hs-cta-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .hs-link {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease, gap 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 3px;
+        }
+
+        .hs-link:hover {
+            color: #60c4ff;
+            gap: 0.8rem;
+            border-color: #60c4ff;
+        }
+
+        /* Hero indicators */
+        .hero-indicators {
+            position: absolute;
+            bottom: 4.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.6rem;
+            z-index: 10;
+        }
+
+        .h-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 0;
+        }
+
+        .h-dot.active {
+            width: 30px;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        /* Progress bar */
+        .hero-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        .hero-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #60c4ff, rgba(255, 255, 255, 0.6));
+            width: 0%;
+        }
+
+        /* Flèches nav */
+        .hero-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-nav-btn.prev {
+            left: 1.5rem;
+        }
+
+        .hero-nav-btn.next {
+            right: 1.5rem;
+        }
+
+        .hero-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        /* ===== WAVE / SEPARATEURS ORGANIQUES ===== */
+        .wave-separator {
+            position: relative;
+            overflow: hidden;
+            height: 60px;
+            line-height: 0;
+            z-index: 5;
+            margin-top: -1px;
+        }
+
+        .wave-separator svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .wave-separator.wave-bottom svg path {
+            fill: var(--bg-primary);
+        }
+
+        /* Diagonal section cut */
+        .section-cut-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg-secondary);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+            z-index: 1;
+        }
+
+        /* ===== SVG MEDICAL DECORATIONS ===== */
+        .section-deco {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.045;
+        }
+
+        .section-deco svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== LEGAL DRAWER ===== */
+        .legal-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(680px, 95vw);
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 4000;
+            overflow-y: auto;
+            transition: right 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 80px rgba(0, 0, 0, 0.25);
+            border-left: 1px solid var(--border-color);
+        }
+
+        .legal-drawer.open {
+            right: 0;
+        }
+
+        .legal-drawer-inner {
+            padding: 3rem 2.5rem;
+        }
+
+        .legal-drawer-inner h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .legal-drawer-inner .legal-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .legal-drawer-inner h3 {
+            font-size: 1.1rem;
+            color: var(--secondary-blue);
+            margin: 1.8rem 0 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .legal-drawer-inner p,
+        .legal-drawer-inner li {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .legal-drawer-inner ul {
+            padding-left: 1.2rem;
+        }
+
+        .legal-close-btn {
+            position: sticky;
+            top: 1.5rem;
+            float: right;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            margin-bottom: -40px;
+        }
+
+        .legal-close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--text-primary);
+        }
+
+        /* ===== SECTIONS GÉNÉRALES ===== */
+        section {
+            padding: 7rem 5%;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: var(--secondary-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-tag::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--gold-accent);
+            transition: var(--transition);
+        }
+
+        .section-header:hover .section-tag::after {
+            width: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== ABOUT (carrousel) ===== */
+        .about {
+            background: var(--bg-secondary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .slider-container {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            height: 400px;
+        }
+
+        /* Logo image */
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: #fff;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0, 85, 164, 0.2);
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-img {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 85, 164, 0.4);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide {
+            width: 25%;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+            color: var(--primary-blue);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-btn:hover {
+            background: #fff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-btn.prev {
+            left: 15px;
+        }
+
+        .slider-btn.next {
+            right: 15px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background: var(--gold-accent);
+            transform: scale(1.2);
+        }
+
+        .dot:hover {
+            transform: scale(1.1);
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== SERVICES ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 3rem 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--light-blue);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--secondary-blue);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--primary-blue);
+            color: #fff;
+            transform: rotateY(360deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: var(--secondary-blue);
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .service-link:hover {
+            gap: 1rem;
+            color: var(--primary-blue);
+        }
+
+        /* ===== SITE VISITS (NOUVEAU) ===== */
+        .site-visits {
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .visits-carousel-wrapper {
+            position: relative;
+            width: 100%;
+            padding: 1rem 0 3rem;
+        }
+
+        .visits-carousel-track {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding: 2rem 1rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .visits-carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .visit-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            flex: 0 0 calc(33.333% - 1.34rem);
+            min-width: 320px;
+            scroll-snap-align: center;
+            cursor: pointer;
+        }
+
+        .visit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+            border-color: var(--secondary-blue);
+            z-index: 2;
+        }
+
+        .visit-image-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .visit-card .visit-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: var(--bg-secondary);
+            filter: grayscale(100%);
+            transform: scale(1);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .visit-card:hover .visit-image {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .visit-card .visit-info {
+            padding: 1.5rem 1.8rem;
+        }
+
+        .visit-card .visit-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .visit-card .visit-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .visit-card .visit-info .visit-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--secondary-blue);
+            font-weight: 500;
+        }
+
+        .visit-card .visit-info .visit-location i {
+            font-size: 0.9rem;
+        }
+
+        .visit-card .visit-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 85, 164, 0.85);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== THERAPEUTIC ===== */
+        .therapeutic {
+            background: var(--bg-primary);
+        }
+
+        .therapeutic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .therapeutic-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .therapeutic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .therapeutic-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .therapeutic-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .therapeutic-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ===== AFRICA (coverage) ===== */
+        .africa {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-bg) 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .africa::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 10s ease-in-out infinite;
+        }
+
+        .africa .section-title,
+        .africa .section-tag {
+            color: #fff;
+        }
+
+        .africa .section-tag::after {
+            background: var(--gold-accent);
+        }
+
+        .africa .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .africa-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .africa-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .africa-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.1), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .africa-card:hover::before {
+            opacity: 1;
+        }
+
+        .africa-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: var(--gold-accent);
+        }
+
+        .africa-card i {
+            font-size: 2.5rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .africa-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .africa-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .africa-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ===== QUALITY ===== */
+        .quality {
+            background: var(--bg-primary);
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-blue), var(--secondary-blue));
+            transform: scaleY(0);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .feature-item:hover {
+            border-color: var(--secondary-blue);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ===== POLICIES ===== */
+        .policies {
+            background: var(--bg-secondary);
+        }
+
+        .policies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .policy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 1.8rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            border-color: var(--secondary-blue);
+        }
+
+        .policy-card i {
+            font-size: 1.8rem;
+            color: var(--secondary-blue);
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .policy-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .policy-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .policy-card .policy-badge {
+            display: inline-block;
+            background: var(--light-blue);
+            color: var(--secondary-blue);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CAREERS ===== */
+        .careers {
+            background: var(--bg-primary);
+        }
+
+        .careers-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .careers-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .careers-content .btn {
+            margin-top: 2rem;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-details {
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            border-color: var(--secondary-blue);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--secondary-blue);
+            margin-top: 0.3rem;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover i {
+            transform: scale(1.2);
+            color: var(--gold-accent);
+        }
+
+        .contact-item div strong {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .contact-item div span {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 4px rgba(0, 85, 164, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.invalid input,
+        .form-group.invalid textarea {
+            border-color: #ef4444;
+        }
+
+        .form-group.invalid .form-error {
+            display: block;
+        }
+
+        /* ===== SERVICE DRAWER ===== */
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
+            z-index: 2999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .drawer-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .service-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(580px, 95vw);
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 3000;
+            overflow-y: auto;
+            transition: right 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 80px rgba(0, 0, 0, 0.25);
+            border-left: 1px solid var(--border-color);
+        }
+
+        .service-drawer.open {
+            right: 0;
+        }
+
+        .drawer-inner {
+            padding: 2.5rem;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-close:hover {
+            transform: rotate(90deg);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .drawer-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .drawer-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 8px 24px rgba(0, 85, 164, 0.3);
+        }
+
+        .drawer-title {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .drawer-headline {
+            font-size: 1rem;
+            color: var(--secondary-blue);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .drawer-body p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .drawer-benefits {
+            margin: 1.5rem 0;
+        }
+
+        .drawer-benefits h4 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .drawer-benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .drawer-benefit-item i {
+            color: var(--secondary-blue);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .drawer-kpis {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .drawer-kpi {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .drawer-kpi-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+            display: block;
+        }
+
+        .drawer-kpi-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .drawer-cta {
+            margin-top: 2rem;
+            width: 100%;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .drawer-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* ===== PREMIUM BUTTONS ===== */
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.7s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 130%;
+        }
+
+        .btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* ===== ADVANCED SCROLL ANIMATIONS ===== */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===== HERO PARTICLES ===== */
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            z-index: 2;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* ===== MOUSE SCROLL INDICATOR ===== */
+        .mouse-icon {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+            margin: 0 auto 0.5rem;
+        }
+
+        .mouse-wheel {
+            width: 4px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            animation: mouse-scroll 1.5s ease-in-out infinite;
+        }
+
+        @keyframes mouse-scroll {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+        }
+
+        .scroll-indicator span {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        /* Stat context */
+        .stat-context {
+            font-size: 0.78rem;
+            color: var(--secondary-blue);
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark-bg);
+            color: #fff;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .logo-text .logo-title {
+            color: #fff;
+        }
+
+        .footer-brand p {
+            margin-top: 1rem;
+            opacity: 0.7;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: var(--gold-accent);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-accent);
+            padding-left: 5px;
+        }
+
+        .footer-links a:hover::before {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-primary);
+            border-radius: 24px;
+            max-width: 700px;
+            width: 90%;
+            padding: 2.5rem 3rem;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: var(--text-primary);
+        }
+
+        .modal h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .modal .modal-icon {
+            font-size: 3rem;
+            color: var(--secondary-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== NOTIFICATIONS ===== */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .notification.success {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .notification.error {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes pulse-whatsapp {
+
+            0%,
+            100% {
+                box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 10px 40px rgba(37, 211, 102, 0.6);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal.delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal.delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal.delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .reveal.delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .africa-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-controls {
+                gap: 0.8rem;
+            }
+
+            .lang-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .africa-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            section {
+                padding: 5rem 5%;
+            }
+
+            .slider-container {
+                height: 300px;
+            }
+
+            .modal {
+                padding: 2rem 1.5rem;
+            }
+
+            .policies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .visits-carousel-track {
+                gap: 1rem;
+            }
+
+            .visit-card {
+                flex: 0 0 calc(100% - 1rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-container {
+                height: 220px;
+            }
+
+            .slider-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== LOADER ===== -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">Acuvera <span>Clinical</span></div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="assets/images/logo%20acuvera%20simple.png" alt="Acuvera Clinical" class="logo-img" />
+                <div class="logo-text">
+                    <span class="logo-title">Acuvera Clinical</span>
+                    <span class="logo-subtitle">Clinical Research</span>
+                </div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" data-i18n="nav.home">Accueil</a></li>
+                <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+                <li><a href="#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="#visits" data-i18n="nav.visits">Visites</a></li>
+                <li><a href="#therapeutic" data-i18n="nav.therapeutic">Expertises</a></li>
+                <li><a href="#africa" data-i18n="nav.geographic">Couverture</a></li>
+                <li><a href="#quality" data-i18n="nav.quality">Qualité</a></li>
+                <li><a href="#policies" data-i18n="nav.policies">Politiques</a></li>
+                <li><a href="#careers" data-i18n="nav.careers">Carrières</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="lang-switch" id="langSwitch">
+                    <button class="lang-btn active" onclick="changeLang('fr')">FR</button>
+                    <button class="lang-btn" onclick="changeLang('en')">EN</button>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu" id="closeMenu">&times;</button>
+        <ul>
+            <li><a href="#hero" data-i18n="nav.home">Accueil</a></li>
+            <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+            <li><a href="#services" data-i18n="nav.services">Services</a></li>
+            <li><a href="#visits" data-i18n="nav.visits">Visites</a></li>
+            <li><a href="#therapeutic" data-i18n="nav.therapeutic">Expertises</a></li>
+            <li><a href="#africa" data-i18n="nav.geographic">Couverture</a></li>
+            <li><a href="#quality" data-i18n="nav.quality">Qualité</a></li>
+            <li><a href="#policies" data-i18n="nav.policies">Politiques</a></li>
+            <li><a href="#careers" data-i18n="nav.careers">Carrières</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- ===== HERO MULTI-SLIDES (IQVIA-style) ===== -->
+    <section class="hero" id="hero">
+
+        <!-- ══ SLIDE 1 : Vidéo locale ══ -->
+        <div class="hero-slide active" id="hslide-0">
+            <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+                <source src="assets/vid%C3%A9o/vid1.mp4" type="video/mp4" />
+            </video>
+            <!-- Overlay : Voile sombre "respirant" style médical -->
+            <div class="hero-overlay hs-overlay-medical"></div>
+            <div class="hero-slide-inner">
+                <div class="hs-eyebrow">ICH-GCP Compliant &nbsp;·&nbsp; 15+ African Countries</div>
+                <h1 class="hs-title">The clinical trial<br>partner Africa<br><em>has been waiting for.</em></h1>
+                <p class="hs-sub">Independent oversight. Rigorous monitoring. Built for Africa — at global standards.
+                </p>
+                <div class="hs-cta-row">
+                    <a href="#contact" class="btn btn-primary"><span>Start a Conversation</span><i
+                            class="fas fa-arrow-right"></i></a>
+                    <a href="#services" class="hs-link">Explore our services <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ SLIDE 2 : Laboratoire (Unsplash libre de droit) ══ -->
+        <div class="hero-slide" id="hslide-1">
+            <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1920&q=85"
+                class="hero-bg-img" alt="Clinical research laboratory" loading="lazy" />
+            <div class="hero-overlay hs-overlay-medical"></div>
+            <div class="hero-slide-inner">
+                <div class="hs-eyebrow">Precision Science &nbsp;·&nbsp; Phase I → IV</div>
+                <h1 class="hs-title">From first patient in<br>to database lock —<br><em>we own every step.</em></h1>
+                <p class="hs-sub">Full-service clinical trial management: monitoring, data, regulatory. One partner
+                    across all your African sites.</p>
+                <div class="hs-cta-row">
+                    <a href="#services" class="btn btn-primary"><span>Our Services</span><i
+                            class="fas fa-arrow-right"></i></a>
+                    <a href="#contact" class="hs-link">Request a proposal <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ SLIDE 3 : Réseau africain (Unsplash libre de droit) ══ -->
+        <div class="hero-slide" id="hslide-2">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=85"
+                class="hero-bg-img" alt="African clinical research network" loading="lazy" />
+            <div class="hero-overlay hs-overlay-medical"></div>
+            <div class="hero-slide-inner">
+                <div class="hs-eyebrow">50+ Qualified Sites &nbsp;·&nbsp; 15 Countries</div>
+                <h1 class="hs-title">15 countries.<br>50 sites.<br><em>1 standard.</em></h1>
+                <p class="hs-sub">The largest pre-qualified clinical trial site network in sub-Saharan Africa — ready to
+                    recruit.</p>
+                <div class="hs-cta-row">
+                    <a href="#visits" class="btn btn-primary"><span>See Our Network</span><i
+                            class="fas fa-arrow-right"></i></a>
+                    <a href="#regions" class="hs-link">Geographic coverage <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicateurs + barre de progression -->
+        <div class="hero-indicators">
+            <button class="h-dot active" data-hslide="0"></button>
+            <button class="h-dot" data-hslide="1"></button>
+            <button class="h-dot" data-hslide="2"></button>
+        </div>
+        <div class="hero-progress-bar">
+            <div class="hero-progress-fill" id="heroProgressFill"></div>
+        </div>
+
+        <!-- Flèches nav -->
+        <button class="hero-nav-btn prev" onclick="moveHeroSlide(-1)" aria-label="Précédent"><i
+                class="fas fa-chevron-left"></i></button>
+        <button class="hero-nav-btn next" onclick="moveHeroSlide(1)" aria-label="Suivant"><i
+                class="fas fa-chevron-right"></i></button>
+
+        <!-- Scroll cue -->
+        <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+            <div class="mouse-icon">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>Découvrir</span>
+        </div>
+    </section>
+
+
+
+    <!-- ===== ABOUT ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-primary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-secondary)" />
+        </svg>
+    </div>
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="slider-container reveal">
+                    <div class="slider-wrapper" id="sliderWrapper">
+                        <div class="slide"><img src="assets/images/img7.jpeg" alt="Recherche clinique Acuvera" /></div>
+                        <div class="slide"><img src="assets/images/img8.jpeg" alt="Centre médical partenaire" /></div>
+                        <div class="slide"><img src="assets/images/img9.jpeg" alt="Équipe Acuvera Clinical" /></div>
+                        <div class="slide"><img src="assets/images/img10.jpeg" alt="Site de recherche Afrique" /></div>
+                    </div>
+                    <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+                    <div class="slider-dots" id="sliderDots">
+                        <button class="dot active" data-index="0"></button>
+                        <button class="dot" data-index="1"></button>
+                        <button class="dot" data-index="2"></button>
+                        <button class="dot" data-index="3"></button>
+                    </div>
+                </div>
+                <div class="about-content reveal">
+                    <span class="section-tag" data-i18n="about.tag">À Propos</span>
+                    <h2 data-i18n="about.title">Allier Standards Globaux et Excellence Africaine</h2>
+                    <p data-i18n="about.p1">Acuvera Clinical est une startup pionnière dédiée à fournir des services
+                        indépendants de surveillance et coordination d'essais cliniques à travers le continent africain.
+                        Nous combinons expertise réglementaire internationale et connaissance locale approfondie.</p>
+                    <p data-i18n="about.p2">Notre équipe de professionnels expérimentés travaille avec les entreprises
+                        pharmaceutiques, CRO, agences gouvernementales et institutions académiques pour transformer la
+                        recherche clinique en Afrique.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="15">0</span>
+                            <span class="stat-label" data-i18n="stats.countries">Pays</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="200">0</span>
+                            <span class="stat-label" data-i18n="stats.trials">Essais Gérés</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="98">0</span>
+                            <span class="stat-label" data-i18n="stats.success">Taux de Succès %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== SERVICES ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-secondary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-primary)" />
+        </svg>
+    </div>
+    <section class="services" id="services">
+        <!-- Décoration SVG : molécule -->
+        <div class="section-deco" style="top:-20px;right:-40px;width:320px;height:320px;color:var(--secondary-blue)">
+            <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="100" cy="100" r="18" />
+                <circle cx="60" cy="55" r="12" />
+                <circle cx="150" cy="60" r="12" />
+                <circle cx="140" cy="150" r="14" />
+                <circle cx="55" cy="145" r="10" />
+                <circle cx="100" cy="30" r="8" />
+                <line x1="100" y1="82" x2="68" y2="63" />
+                <line x1="100" y1="82" x2="142" y2="68" />
+                <line x1="100" y1="118" x2="134" y2="136" />
+                <line x1="100" y1="118" x2="63" y2="135" />
+                <line x1="100" y1="82" x2="100" y2="38" />
+                <circle cx="35" cy="100" r="7" />
+                <line x1="60" y1="55" x2="42" y2="93" />
+                <circle cx="165" cy="110" r="7" />
+                <line x1="150" y1="60" x2="163" y2="103" />
+            </svg>
+        </div>
+        <!-- Décoration : stethoscope simple -->
+        <div class="section-deco" style="bottom:30px;left:20px;width:180px;height:180px;color:var(--primary-blue)">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M20,20 Q20,50 50,50 Q80,50 80,75 A10,10 0 1,1 60,75" />
+                <circle cx="20" cy="20" r="5" fill="currentColor" />
+                <circle cx="35" cy="20" r="5" fill="currentColor" />
+                <line x1="20" y1="20" x2="20" y2="35" />
+                <line x1="35" y1="20" x2="35" y2="35" />
+                <path d="M20,35 Q27,45 35,35" />
+            </svg>
+        </div>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="services.tag">Notre Expertise</span>
+                <h2 class="section-title" data-i18n="services.title">Solutions Complètes de Recherche Clinique</h2>
+                <p class="section-subtitle" data-i18n="services.subtitle">Des services de bout en bout pour assurer
+                    conformité, qualité et résultats probants</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal" onclick="openDrawer('s1')">
+                    <div class="service-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 data-i18n="services.1.title">Monitoring Clinique</h3>
+                    <p data-i18n="services.1.desc">Services de monitoring sur site et à distance assurant la conformité
+                        au protocole, l'intégrité des données et la sécurité des patients.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="service-card reveal" onclick="openDrawer('s2')">
+                    <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3 data-i18n="services.2.title">Coordination d'Essais</h3>
+                    <p data-i18n="services.2.desc">Coordination stratégique d'essais multicentriques à travers les sites
+                        africains, gestion de la logistique et des délais.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="service-card reveal" onclick="openDrawer('s3')">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 data-i18n="services.3.title">Assurance Qualité</h3>
+                    <p data-i18n="services.3.desc">Processus QA/QC rigoureux, support d'audit et conformité
+                        réglementaire selon ICH-GCP et réglementations locales.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="service-card reveal" onclick="openDrawer('s4')">
+                    <div class="service-icon"><i class="fas fa-file-medical-alt"></i></div>
+                    <h3 data-i18n="services.4.title">Affaires Réglementaires</h3>
+                    <p data-i18n="services.4.desc">Navigation experte des paysages réglementaires africains, soumissions
+                        aux comités d'éthique et processus d'approbation.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="service-card reveal" onclick="openDrawer('s5')">
+                    <div class="service-icon"><i class="fas fa-users"></i></div>
+                    <h3 data-i18n="services.5.title">Gestion de Sites</h3>
+                    <p data-i18n="services.5.desc">Sélection, qualification et gestion de sites d'essais cliniques avec
+                        réseaux établis dans 15+ pays africains.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="service-card reveal" onclick="openDrawer('s6')">
+                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 data-i18n="services.6.title">Gestion des Données</h3>
+                    <p data-i18n="services.6.desc">Systèmes avancés de collecte, validation et gestion des données
+                        assurant des données d'essai précises et conformes.</p>
+                    <span class="service-link" data-i18n="services.learn">En Savoir Plus <i
+                            class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SITE VISITS (NOUVEAU) ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-primary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-secondary)" />
+        </svg>
+    </div>
+    <section class="site-visits" id="visits">
+        <div class="container">
+
+            <!-- Décoration SVG : Cellules -->
+            <div class="section-deco"
+                style="top:5%;left:-20px;width:150px;height:150px;color:var(--gold-accent);opacity:0.6;">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+                    <circle cx="30" cy="30" r="20" stroke-dasharray="4 4" />
+                    <circle cx="70" cy="60" r="15" />
+                    <circle cx="50" cy="20" r="5" fill="currentColor" />
+                    <circle cx="80" cy="30" r="3" fill="currentColor" />
+                </svg>
+            </div>
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="visits.tag">Nos Visites de Sites</span>
+                <h2 class="section-title" data-i18n="visits.title">Nos Centres de Recherche Partenaires</h2>
+                <p class="section-subtitle" data-i18n="visits.subtitle">Des institutions de santé de référence à travers
+                    l'Afrique</p>
+            </div>
+            <div class="visits-carousel-wrapper">
+                <div class="visits-carousel-track" id="visitsCarousel">
+                    <div class="visit-card reveal"
+                        onclick="openVisitModal('District de Santé de New-Bell', 'Douala, Cameroun', 'Un centre de santé de référence spécialisé dans les études épidémiologiques et cliniques. Équipé pour les essais de phase II et III avec une large cohorte de patients diversifiée.', 'assets/images/img6.jpeg')">
+                        <div class="visit-image-wrapper">
+                            <img class="visit-image" src="assets/images/img6.jpeg"
+                                alt="District de Santé de New-Bell" />
+                        </div>
+                        <div class="visit-info">
+                            <h4>District de Santé de New-Bell</h4>
+                            <p>Douala, Cameroun</p>
+                            <span class="visit-location"><i class="fas fa-map-pin"></i> Cameroun</span>
+                        </div>
+                        <span class="visit-badge">Site visité</span>
+                    </div>
+
+                    <div class="visit-card reveal"
+                        onclick="openVisitModal('District de Santé de Deido', 'Douala, Cameroun', 'Institution de santé majeure reconnue pour son expertise en médecine tropicale et essais multicentriques. Dispose de laboratoires modernes et d\'un personnel hautement qualifié.', 'assets/images/img5.jpeg')">
+                        <div class="visit-image-wrapper">
+                            <img class="visit-image" src="assets/images/img5.jpeg" alt="District de Santé de Deido" />
+                        </div>
+                        <div class="visit-info">
+                            <h4>District de Santé de Deido</h4>
+                            <p>Douala, Cameroun</p>
+                            <span class="visit-location"><i class="fas fa-map-pin"></i> Cameroun</span>
+                        </div>
+                        <span class="visit-badge">Site visité</span>
+                    </div>
+
+                    <div class="visit-card reveal"
+                        onclick="openVisitModal('BCRH Mother and Baby Hospital', 'Cameroun', 'Hôpital spécialisé dans la santé maternelle et infantile. Idéal pour les études observationnelles pédiatriques et les essais cliniques liés à la néonatalogie.', 'assets/images/img8.jpeg')">
+                        <div class="visit-image-wrapper">
+                            <img class="visit-image" src="assets/images/img8.jpeg"
+                                alt="BCRH Mother and Baby Hospital" />
+                        </div>
+                        <div class="visit-info">
+                            <h4>BCRH Mother and Baby Hospital</h4>
+                            <p>Cameroun</p>
+                            <span class="visit-location"><i class="fas fa-map-pin"></i> Cameroun</span>
+                        </div>
+                        <span class="visit-badge">Site visité</span>
+                    </div>
+
+                    <div class="visit-card reveal"
+                        onclick="openVisitModal('Butere County Hospital', 'Butere, Kenya', 'Un partenaire de recherche stratégique en Afrique de l\'Est avec un accès rapide aux communautés rurales pour des études à large échelle et des interventions en santé publique.', 'assets/images/img9.jpeg')">
+                        <div class="visit-image-wrapper">
+                            <img class="visit-image" src="assets/images/img9.jpeg" alt="Butere County Hospital" />
+                        </div>
+                        <div class="visit-info">
+                            <h4>Butere County Hospital</h4>
+                            <p>Butere, Kenya</p>
+                            <span class="visit-location"><i class="fas fa-map-pin"></i> Kenya</span>
+                        </div>
+                        <span class="visit-badge">En cours</span>
+                    </div>
+
+                    <div class="visit-card reveal"
+                        onclick="openVisitModal('MEIRU - Malawi', 'Malawi', 'Malawi Epidemiology and Intervention Research Unit. Une institution renommée pour la recherche sur les maladies non transmissibles avec des données de suivi démographique à long terme.', 'assets/images/img2.jpeg')">
+                        <div class="visit-image-wrapper">
+                            <img class="visit-image" src="assets/images/img2.jpeg" alt="MEIRU - Malawi" />
+                        </div>
+                        <div class="visit-info">
+                            <h4>MEIRU - Malawi</h4>
+                            <p>Malawi</p>
+                            <span class="visit-location"><i class="fas fa-map-pin"></i> Malawi</span>
+                        </div>
+                        <span class="visit-badge">Site visité</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:2.5rem;">
+                <p style="color:var(--text-secondary);" data-i18n="visits.note">D'autres sites sont en cours de
+                    qualification. Contactez-nous pour plus d'informations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== THERAPEUTIC ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-secondary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-primary)" />
+        </svg>
+    </div>
+    <section class="therapeutic" id="therapeutic">
+        <div class="container">
+
+            <!-- Décoration SVG : ADN abstrait -->
+            <div class="section-deco"
+                style="bottom:10%;right:5%;width:200px;height:200px;color:var(--primary-blue);opacity:0.3;">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20,10 Q50,50 80,90 M80,10 Q50,50 20,90" />
+                    <line x1="30" y1="25" x2="70" y2="25" />
+                    <line x1="45" y1="40" x2="55" y2="40" />
+                    <line x1="25" y1="75" x2="75" y2="75" />
+                    <circle cx="20" cy="10" r="3" fill="currentColor" />
+                    <circle cx="80" cy="90" r="3" fill="currentColor" />
+                    <circle cx="80" cy="10" r="3" fill="currentColor" />
+                    <circle cx="20" cy="90" r="3" fill="currentColor" />
+                </svg>
+            </div>
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="therapeutic.tag">Expertises Thérapeutiques</span>
+                <h2 class="section-title" data-i18n="therapeutic.title">Domaines d'Excellence</h2>
+                <p class="section-subtitle" data-i18n="therapeutic.subtitle">Nous intervenons dans un large éventail de
+                    pathologies avec une approche personnalisée</p>
+            </div>
+            <div class="therapeutic-grid">
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3 data-i18n="therapeutic.card1.title">Cardiologie</h3>
+                    <p data-i18n="therapeutic.card1.desc">Essais cliniques en hypertension, insuffisance cardiaque,
+                        maladies coronariennes.</p>
+                </div>
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-virus"></i>
+                    <h3 data-i18n="therapeutic.card2.title">Infectiologie</h3>
+                    <p data-i18n="therapeutic.card2.desc">VIH/SIDA, tuberculose, paludisme, hépatites et maladies
+                        tropicales négligées.</p>
+                </div>
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-brain"></i>
+                    <h3 data-i18n="therapeutic.card3.title">Neurologie</h3>
+                    <p data-i18n="therapeutic.card3.desc">Épilepsie, maladies neurodégénératives, troubles du mouvement.
+                    </p>
+                </div>
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-lungs"></i>
+                    <h3 data-i18n="therapeutic.card4.title">Pneumologie</h3>
+                    <p data-i18n="therapeutic.card4.desc">Asthme, BPCO, infections respiratoires, tuberculose.</p>
+                </div>
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-baby"></i>
+                    <h3 data-i18n="therapeutic.card5.title">Pédiatrie</h3>
+                    <p data-i18n="therapeutic.card5.desc">Recherche clinique en santé infantile, malnutrition, maladies
+                        infectieuses pédiatriques.</p>
+                </div>
+                <div class="therapeutic-card reveal">
+                    <i class="fas fa-female"></i>
+                    <h3 data-i18n="therapeutic.card6.title">Santé de la Femme</h3>
+                    <p data-i18n="therapeutic.card6.desc">Grossesse, santé maternelle, oncologie gynécologique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== AFRICA (coverage) ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-primary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-secondary)" />
+        </svg>
+    </div>
+    <section class="africa" id="africa">
+        <div class="container">
+
+            <!-- Décoration SVG : Plus médical -->
+            <div class="section-deco"
+                style="top:20%;right:-30px;width:120px;height:120px;color:var(--secondary-blue);opacity:0.4;">
+                <svg viewBox="0 0 100 100" fill="currentColor">
+                    <rect x="40" y="10" width="20" height="80" rx="10" />
+                    <rect x="10" y="40" width="80" height="20" rx="10" />
+                </svg>
+            </div>
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="africa.tag">Couverture Géographique</span>
+                <h2 class="section-title" data-i18n="africa.title">Présence Panafricaine</h2>
+                <p class="section-subtitle" data-i18n="africa.subtitle">Une implantation stratégique dans les
+                    principales régions d'Afrique</p>
+            </div>
+            <div class="africa-grid">
+                <div class="africa-card reveal"><i class="fas fa-map-marker-alt"></i>
+                    <h3 data-i18n="africa.1.title">Afrique de l'Ouest</h3>
+                    <p data-i18n="africa.1.desc">Sénégal, Côte d'Ivoire, Ghana, Nigeria</p>
+                </div>
+                <div class="africa-card reveal"><i class="fas fa-map-marker-alt"></i>
+                    <h3 data-i18n="africa.2.title">Afrique de l'Est</h3>
+                    <p data-i18n="africa.2.desc">Kenya, Ouganda, Tanzanie, Éthiopie</p>
+                </div>
+                <div class="africa-card reveal"><i class="fas fa-map-marker-alt"></i>
+                    <h3 data-i18n="africa.3.title">Afrique Australe</h3>
+                    <p data-i18n="africa.3.desc">Afrique du Sud, Botswana, Zambie</p>
+                </div>
+                <div class="africa-card reveal"><i class="fas fa-map-marker-alt"></i>
+                    <h3 data-i18n="africa.4.title">Afrique du Nord</h3>
+                    <p data-i18n="africa.4.desc">Maroc, Égypte, Tunisie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== QUALITY ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-secondary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-primary)" />
+        </svg>
+    </div>
+    <section class="quality" id="quality">
+        <div class="container">
+
+            <!-- Décoration SVG : Loupe / Validation -->
+            <div class="section-deco"
+                style="bottom:5%;left:-30px;width:180px;height:180px;color:var(--gold-accent);opacity:0.5;">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+                    <circle cx="40" cy="40" r="25" />
+                    <line x1="60" y1="60" x2="90" y2="90" />
+                    <polyline points="30,40 40,50 55,30" />
+                </svg>
+            </div>
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="quality.tag">Qualité & Conformité</span>
+                <h2 class="section-title" data-i18n="quality.title">Notre Engagement Qualité</h2>
+                <p class="section-subtitle" data-i18n="quality.subtitle">Des standards rigoureux pour garantir
+                    l'intégrité et la fiabilité de vos essais</p>
+            </div>
+            <div class="features-list">
+                <div class="feature-item reveal">
+                    <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="feature-content">
+                        <h3 data-i18n="quality.1.title">Certifications Internationales</h3>
+                        <p data-i18n="quality.1.desc">Nous respectons les normes ICH-GCP, ISO 9001 et les bonnes
+                            pratiques cliniques.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="feature-content">
+                        <h3 data-i18n="quality.2.title">Gestion des Risques</h3>
+                        <p data-i18n="quality.2.desc">Une approche proactive pour identifier, évaluer et atténuer les
+                            risques tout au long de l'essai.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="feature-content">
+                        <h3 data-i18n="quality.3.title">Audits Internes</h3>
+                        <p data-i18n="quality.3.desc">Des audits réguliers pour garantir la conformité et l'amélioration
+                            continue.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <div class="feature-content">
+                        <h3 data-i18n="quality.4.title">Protection des Données</h3>
+                        <p data-i18n="quality.4.desc">Conformité au RGPD et aux lois locales sur la protection des
+                            données personnelles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== POLICIES ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-primary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-secondary)" />
+        </svg>
+    </div>
+    <section class="policies" id="policies">
+        <div class="container">
+
+            <!-- Décoration SVG : Bouclier abstrait -->
+            <div class="section-deco"
+                style="top:5%;right:5%;width:130px;height:130px;color:var(--primary-blue);opacity:0.4;">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+                    <path d="M50,10 L90,25 L90,60 Q90,90 50,95 Q10,90 10,60 L10,25 Z" />
+                    <circle cx="50" cy="50" r="10" fill="currentColor" />
+                </svg>
+            </div>
+
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="policies.tag">Nos Politiques</span>
+                <h2 class="section-title" data-i18n="policies.title">Engagements Éthiques & Réglementaires</h2>
+                <p class="section-subtitle" data-i18n="policies.subtitle">Des principes fondamentaux qui guident nos
+                    actions au quotidien</p>
+            </div>
+            <div class="policies-grid">
+                <div class="policy-card reveal"><i class="fas fa-gavel"></i>
+                    <div>
+                        <h4 data-i18n="policies.1.title">Anti‑Corruption</h4>
+                        <p data-i18n="policies.1.desc">Politique de tolérance zéro envers la corruption, conformité aux
+                            lois anticorruption internationales.</p><span class="policy-badge"
+                            data-i18n="policies.badge">Document disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-handshake"></i>
+                    <div>
+                        <h4 data-i18n="policies.2.title">Lutte contre la Corruption</h4>
+                        <p data-i18n="policies.2.desc">Procédures strictes pour prévenir et détecter tout acte de
+                            corruption.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-bullhorn"></i>
+                    <div>
+                        <h4 data-i18n="policies.3.title">Alerte Éthique (Whistleblowing)</h4>
+                        <p data-i18n="policies.3.desc">Dispositif sécurisé permettant de signaler tout comportement
+                            contraire à l'éthique.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-balance-scale"></i>
+                    <div>
+                        <h4 data-i18n="policies.4.title">Code d'Éthique</h4>
+                        <p data-i18n="policies.4.desc">Un référentiel des valeurs et comportements attendus chez Acuvera
+                            Clinical.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-user-shield"></i>
+                    <div>
+                        <h4 data-i18n="policies.5.title">Sauvegarde (Safeguarding)</h4>
+                        <p data-i18n="policies.5.desc">Protection des populations vulnérables et des participants aux
+                            essais cliniques.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-lock"></i>
+                    <div>
+                        <h4 data-i18n="policies.6.title">Protection des Données</h4>
+                        <p data-i18n="policies.6.desc">Engagement à respecter la confidentialité et la sécurité des
+                            données personnelles.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+                <div class="policy-card reveal"><i class="fas fa-leaf"></i>
+                    <div>
+                        <h4 data-i18n="policies.7.title">Plan de Réduction Carbone</h4>
+                        <p data-i18n="policies.7.desc">Notre stratégie pour minimiser notre impact environnemental dans
+                            toutes nos activités.</p><span class="policy-badge" data-i18n="policies.badge">Document
+                            disponible</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:2.5rem;">
+                <p style="color:var(--text-secondary);" data-i18n="policies.note">Ces documents sont disponibles sur
+                    demande. Contactez-nous pour y accéder.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CAREERS ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-secondary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-primary)" />
+        </svg>
+    </div>
+    <section class="careers" id="careers">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="careers.tag">Carrières</span>
+                <h2 class="section-title" data-i18n="careers.title">Rejoignez notre Équipe</h2>
+                <p class="section-subtitle" data-i18n="careers.subtitle">Nous cherchons des talents passionnés par la
+                    recherche clinique en Afrique</p>
+            </div>
+            <div class="careers-content reveal">
+                <p data-i18n="careers.desc">Acuvera Clinical offre un environnement dynamique et multiculturel où
+                    l'innovation et l'excellence sont au cœur de nos valeurs. Nous recrutons régulièrement des
+                    professionnels de la recherche clinique, des data managers, des régulateurs et des experts en
+                    assurance qualité.</p>
+                <p data-i18n="careers.cta">Envoyez votre candidature à <a href="mailto:careers@acuveraclinical.com"
+                        style="color:var(--secondary-blue);">careers@acuveraclinical.com</a> et rejoignez une équipe qui
+                    façonne l'avenir de la santé en Afrique.</p>
+                <div class="btn btn-primary" style="display:inline-flex;"
+                    onclick="window.open('mailto:careers@acuveraclinical.com?subject=Candidature%20Acuvera%20Clinical')">
+                    <span data-i18n="careers.button">Postuler maintenant</span>
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-primary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-secondary)" />
+        </svg>
+    </div>
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <span class="section-tag" data-i18n="contact.tag">Contactez-nous</span>
+                    <h3 data-i18n="contact.title">Discutons de votre Prochain Essai Clinique</h3>
+                    <p data-i18n="contact.desc">Prêt à élever votre recherche clinique en Afrique ? Notre équipe est là
+                        pour fournir des solutions sur mesure.</p>
+                    <div class="contact-details">
+                        <div class="contact-item"
+                            onclick="window.open('mailto:info@acuveraclinical.com?subject=Demande%20de%20renseignements%20-%20Acuvera%20Clinical&body=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20services%20de%20recherche%20clinique%20en%20Afrique.%20Pouvez-vous%20me%20fournir%20plus%20d%27informations%20%3F')">
+                            <i class="fas fa-envelope"></i>
+                            <div><strong
+                                    data-i18n="contact.email.label">Email</strong><span>info@acuveraclinical.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item"
+                            onclick="window.open('https://wa.me/237655519536?text=Bonjour%2C%20je%20souhaite%20discuter%20d%27un%20projet%20de%20recherche%20clinique%20avec%20Acuvera%20Clinical.','_blank')">
+                            <i class="fab fa-whatsapp"></i>
+                            <div><strong>WhatsApp</strong><span>+237 655 519 536</span></div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div><strong data-i18n="contact.address.label">Siège</strong><span
+                                    data-i18n="contact.address.value">Dakar, Sénégal | Opérations Panafricaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form reveal">
+                    <form id="contactForm" novalidate>
+                        <div class="form-group" id="nameGroup">
+                            <label data-i18n="form.name">Nom Complet</label>
+                            <input type="text" id="fullName" required placeholder="John Doe" />
+                            <div class="form-error" data-i18n="form.error.name">Veuillez entrer votre nom complet.</div>
+                        </div>
+                        <div class="form-group" id="emailGroup">
+                            <label data-i18n="form.email">Adresse Email</label>
+                            <input type="email" id="emailAddr" required placeholder="john@company.com" />
+                            <div class="form-error" data-i18n="form.error.email">Veuillez entrer une adresse email
+                                valide.</div>
+                        </div>
+                        <div class="form-group" id="companyGroup">
+                            <label data-i18n="form.company">Entreprise/Organisation</label>
+                            <input type="text" id="companyName" required placeholder="Votre entreprise" />
+                            <div class="form-error" data-i18n="form.error.company">Veuillez indiquer votre organisation.
+                            </div>
+                        </div>
+                        <div class="form-group" id="messageGroup">
+                            <label data-i18n="form.message">Message</label>
+                            <textarea id="msgContent" required
+                                placeholder="Dites-nous en plus sur votre projet..."></textarea>
+                            <div class="form-error" data-i18n="form.error.message">Le message doit contenir au moins 10
+                                caractères.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+                            <span data-i18n="form.submit">Envoyer le Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+
+    <!-- WAVE separator -->
+    <div class="wave-separator" style="background:var(--bg-secondary)">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="var(--bg-primary)" />
+        </svg>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><img src="assets/images/logo%20acuvera.png" alt="Acuvera Clinical"
+                            class="logo-img" />
+                        <div class="logo-text"><span class="logo-title">Acuvera Clinical</span></div>
+                    </div>
+                    <p data-i18n="footer.desc">Innover la Recherche, Garantir les Résultats. Votre partenaire de
+                        confiance pour l'excellence des essais cliniques en Afrique.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer.services">Services</h4>
+                    <ul>
+                        <li><a href="#services" data-i18n="footer.link1">Monitoring Clinique</a></li>
+                        <li><a href="#services" data-i18n="footer.link2">Coordination d'Essais</a></li>
+                        <li><a href="#services" data-i18n="footer.link3">Assurance Qualité</a></li>
+                        <li><a href="#services" data-i18n="footer.link4">Affaires Réglementaires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer.company">Entreprise</h4>
+                    <ul>
+                        <li><a href="#about" data-i18n="footer.link5">À Propos</a></li>
+                        <li><a href="#careers" data-i18n="footer.link6">Carrières</a></li>
+                        <li><a href="#policies" data-i18n="footer.link7">Politiques</a></li>
+                        <li><a href="#contact" data-i18n="footer.link8">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer.legal">Légal</h4>
+                    <ul>
+                        <li><a href="#" onclick="openLegalDrawer('privacy');return false;"
+                                data-i18n="footer.link9">Politique de Confidentialité</a></li>
+                        <li><a href="#" onclick="openLegalDrawer('terms');return false;"
+                                data-i18n="footer.link10">Conditions d'Utilisation</a></li>
+                        <li><a href="#" onclick="openLegalDrawer('cookies');return false;"
+                                data-i18n="footer.link11">Politique des Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Acuvera Clinical. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+                <div class="social-links"><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a
+                        href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#"
+                        aria-label="Instagram"><i class="fab fa-instagram"></i></a></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <div class="whatsapp-float"
+        onclick="window.open('https://wa.me/237655519536?text=Bonjour%2C%20je%20souhaite%20discuter%20d%27un%20projet%20de%20recherche%20clinique%20avec%20Acuvera%20Clinical.','_blank')"
+        title="Contactez-nous sur WhatsApp"><i class="fab fa-whatsapp"></i></div>
+
+    <!-- ===== MODAL VISITS ===== -->
+    <div class="modal-overlay" id="visitModalOverlay" onclick="closeVisitModal(event)">
+        <div class="modal" id="visitModal" style="max-width: 600px; padding: 2.5rem; text-align: left;">
+            <button class="modal-close" onclick="closeVisitModalBtn()"><i class="fas fa-times"></i></button>
+            <h2 id="vModalTitle"
+                style="font-size:1.8rem; color:var(--text-primary); margin-bottom:1.5rem; font-family:'Cormorant Garamond',serif;">
+                Titre</h2>
+            <div id="vModalContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== DRAWER SERVICE (remplace les modals) ===== -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+    <div class="service-drawer" id="serviceDrawer">
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="Fermer">×</button>
+        <div class="drawer-inner" id="drawerContent"></div>
+    </div>
+
+    <!-- ===== LEGAL DRAWER ===== -->
+    <div class="drawer-backdrop" id="legalBackdrop" onclick="closeLegalDrawer()"></div>
+    <div class="legal-drawer" id="legalDrawer">
+        <div class="legal-drawer-inner">
+            <button class="legal-close-btn" onclick="closeLegalDrawer()" aria-label="Fermer">×</button>
+            <div id="legalDrawerContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // =========================================
+        // 1. TRADUCTIONS (FR/EN complètes)
+        // =========================================
+        const translations = {
+            fr: {
+                'hero.badge': 'Leader de la Recherche Clinique en Afrique',
+                'hero.title': 'Excellence dans la Supervision des Essais Cliniques',
+                'hero.subtitle': 'Services indépendants de surveillance et coordination pour industries pharmaceutiques, CRO et institutions de recherche worldwide',
+                'hero.slogan': '"Innover la Recherche, Garantir les Résultats"',
+                'hero.cta.primary': 'Démarrer votre Projet',
+                'about.tag': 'À Propos',
+                'about.title': 'Allier Standards Globaux et Excellence Africaine',
+                'about.p1': 'Acuvera Clinical est une startup pionnière dédiée à fournir des services indépendants de surveillance et coordination d\'essais cliniques à travers le continent africain. Nous combinons expertise réglementaire internationale et connaissance locale approfondie.',
+                'about.p2': 'Notre équipe de professionnels expérimentés travaille avec les entreprises pharmaceutiques, CRO, agences gouvernementales et institutions académiques pour transformer la recherche clinique en Afrique.',
+                'stats.countries': 'Pays',
+                'stats.trials': 'Essais Gérés',
+                'stats.success': 'Taux de Succès %',
+                'services.tag': 'Notre Expertise',
+                'services.title': 'Solutions Complètes de Recherche Clinique',
+                'services.subtitle': 'Des services de bout en bout pour assurer conformité, qualité et résultats probants',
+                'services.1.title': 'Monitoring Clinique',
+                'services.1.desc': 'Services de monitoring sur site et à distance assurant la conformité au protocole, l\'intégrité des données et la sécurité des patients.',
+                'services.2.title': 'Coordination d\'Essais',
+                'services.2.desc': 'Coordination stratégique d\'essais multicentriques à travers les sites africains, gestion de la logistique et des délais.',
+                'services.3.title': 'Assurance Qualité',
+                'services.3.desc': 'Processus QA/QC rigoureux, support d\'audit et conformité réglementaire selon ICH-GCP et réglementations locales.',
+                'services.4.title': 'Affaires Réglementaires',
+                'services.4.desc': 'Navigation experte des paysages réglementaires africains, soumissions aux comités d\'éthique et processus d\'approbation.',
+                'services.5.title': 'Gestion de Sites',
+                'services.5.desc': 'Sélection, qualification et gestion de sites d\'essais cliniques avec réseaux établis dans 15+ pays africains.',
+                'services.6.title': 'Gestion des Données',
+                'services.6.desc': 'Systèmes avancés de collecte, validation et gestion des données assurant des données d\'essai précises et conformes.',
+                'services.learn': 'En Savoir Plus',
+                'visits.tag': 'Nos Visites de Sites',
+                'visits.title': 'Nos Centres de Recherche Partenaires',
+                'visits.subtitle': 'Des institutions de santé de référence à travers l\'Afrique',
+                'visits.note': 'D\'autres sites sont en cours de qualification. Contactez-nous pour plus d\'informations.',
+                'therapeutic.tag': 'Expertises Thérapeutiques',
+                'therapeutic.title': 'Domaines d\'Excellence',
+                'therapeutic.subtitle': 'Nous intervenons dans un large éventail de pathologies avec une approche personnalisée',
+                'therapeutic.card1.title': 'Cardiologie',
+                'therapeutic.card1.desc': 'Essais cliniques en hypertension, insuffisance cardiaque, maladies coronariennes.',
+                'therapeutic.card2.title': 'Infectiologie',
+                'therapeutic.card2.desc': 'VIH/SIDA, tuberculose, paludisme, hépatites et maladies tropicales négligées.',
+                'therapeutic.card3.title': 'Neurologie',
+                'therapeutic.card3.desc': 'Épilepsie, maladies neurodégénératives, troubles du mouvement.',
+                'therapeutic.card4.title': 'Pneumologie',
+                'therapeutic.card4.desc': 'Asthme, BPCO, infections respiratoires, tuberculose.',
+                'therapeutic.card5.title': 'Pédiatrie',
+                'therapeutic.card5.desc': 'Recherche clinique en santé infantile, malnutrition, maladies infectieuses pédiatriques.',
+                'therapeutic.card6.title': 'Santé de la Femme',
+                'therapeutic.card6.desc': 'Grossesse, santé maternelle, oncologie gynécologique.',
+                'africa.tag': 'Couverture Géographique',
+                'africa.title': 'Présence Panafricaine',
+                'africa.subtitle': 'Une implantation stratégique dans les principales régions d\'Afrique',
+                'africa.1.title': 'Afrique de l\'Ouest',
+                'africa.1.desc': 'Sénégal, Côte d\'Ivoire, Ghana, Nigeria',
+                'africa.2.title': 'Afrique de l\'Est',
+                'africa.2.desc': 'Kenya, Ouganda, Tanzanie, Éthiopie',
+                'africa.3.title': 'Afrique Australe',
+                'africa.3.desc': 'Afrique du Sud, Botswana, Zambie',
+                'africa.4.title': 'Afrique du Nord',
+                'africa.4.desc': 'Maroc, Égypte, Tunisie',
+                'quality.tag': 'Qualité & Conformité',
+                'quality.title': 'Notre Engagement Qualité',
+                'quality.subtitle': 'Des standards rigoureux pour garantir l\'intégrité et la fiabilité de vos essais',
+                'quality.1.title': 'Certifications Internationales',
+                'quality.1.desc': 'Nous respectons les normes ICH-GCP, ISO 9001 et les bonnes pratiques cliniques.',
+                'quality.2.title': 'Gestion des Risques',
+                'quality.2.desc': 'Une approche proactive pour identifier, évaluer et atténuer les risques tout au long de l\'essai.',
+                'quality.3.title': 'Audits Internes',
+                'quality.3.desc': 'Des audits réguliers pour garantir la conformité et l\'amélioration continue.',
+                'quality.4.title': 'Protection des Données',
+                'quality.4.desc': 'Conformité au RGPD et aux lois locales sur la protection des données personnelles.',
+                'policies.tag': 'Nos Politiques',
+                'policies.title': 'Engagements Éthiques & Réglementaires',
+                'policies.subtitle': 'Des principes fondamentaux qui guident nos actions au quotidien',
+                'policies.1.title': 'Anti‑Corruption',
+                'policies.1.desc': 'Politique de tolérance zéro envers la corruption, conformité aux lois anticorruption internationales.',
+                'policies.2.title': 'Lutte contre la Corruption',
+                'policies.2.desc': 'Procédures strictes pour prévenir et détecter tout acte de corruption.',
+                'policies.3.title': 'Alerte Éthique (Whistleblowing)',
+                'policies.3.desc': 'Dispositif sécurisé permettant de signaler tout comportement contraire à l\'éthique.',
+                'policies.4.title': 'Code d\'Éthique',
+                'policies.4.desc': 'Un référentiel des valeurs et comportements attendus chez Acuvera Clinical.',
+                'policies.5.title': 'Sauvegarde (Safeguarding)',
+                'policies.5.desc': 'Protection des populations vulnérables et des participants aux essais cliniques.',
+                'policies.6.title': 'Protection des Données',
+                'policies.6.desc': 'Engagement à respecter la confidentialité et la sécurité des données personnelles.',
+                'policies.7.title': 'Plan de Réduction Carbone',
+                'policies.7.desc': 'Notre stratégie pour minimiser notre impact environnemental dans toutes nos activités.',
+                'policies.badge': 'Document disponible',
+                'policies.note': 'Ces documents sont disponibles sur demande. Contactez-nous pour y accéder.',
+                'careers.tag': 'Carrières',
+                'careers.title': 'Rejoignez notre Équipe',
+                'careers.subtitle': 'Nous cherchons des talents passionnés par la recherche clinique en Afrique',
+                'careers.desc': 'Acuvera Clinical offre un environnement dynamique et multiculturel où l\'innovation et l\'excellence sont au cœur de nos valeurs. Nous recrutons régulièrement des professionnels de la recherche clinique, des data managers, des régulateurs et des experts en assurance qualité.',
+                'careers.cta': 'Envoyez votre candidature à careers@acuveraclinical.com et rejoignez une équipe qui façonne l\'avenir de la santé en Afrique.',
+                'careers.button': 'Postuler maintenant',
+                'contact.tag': 'Contactez-nous',
+                'contact.title': 'Discutons de votre Prochain Essai Clinique',
+                'contact.desc': 'Prêt à élever votre recherche clinique en Afrique ? Notre équipe est là pour fournir des solutions sur mesure.',
+                'contact.address.label': 'Siège',
+                'contact.address.value': 'Dakar, Sénégal | Opérations Panafricaines',
+                'contact.email.label': 'Email',
+                'form.name': 'Nom Complet',
+                'form.email': 'Adresse Email',
+                'form.company': 'Entreprise/Organisation',
+                'form.message': 'Message',
+                'form.submit': 'Envoyer le Message',
+                'form.error.name': 'Veuillez entrer votre nom complet.',
+                'form.error.email': 'Veuillez entrer une adresse email valide.',
+                'form.error.company': 'Veuillez indiquer votre organisation.',
+                'form.error.message': 'Le message doit contenir au moins 10 caractères.',
+                'nav.home': 'Accueil',
+                'nav.about': 'À propos',
+                'nav.services': 'Services',
+                'nav.visits': 'Visites',
+                'nav.therapeutic': 'Expertises',
+                'nav.geographic': 'Couverture',
+                'nav.quality': 'Qualité',
+                'nav.policies': 'Politiques',
+                'nav.careers': 'Carrières',
+                'nav.contact': 'Contact',
+                'footer.desc': 'Innover la Recherche, Garantir les Résultats. Votre partenaire de confiance pour l\'excellence des essais cliniques en Afrique.',
+                'footer.services': 'Services',
+                'footer.company': 'Entreprise',
+                'footer.legal': 'Légal',
+                'footer.link1': 'Monitoring Clinique',
+                'footer.link2': 'Coordination d\'Essais',
+                'footer.link3': 'Assurance Qualité',
+                'footer.link4': 'Affaires Réglementaires',
+                'footer.link5': 'À Propos',
+                'footer.link6': 'Carrières',
+                'footer.link7': 'Politiques',
+                'footer.link8': 'Contact',
+                'footer.link9': 'Politique de Confidentialité',
+                'footer.link10': 'Conditions d\'Utilisation',
+                'footer.link11': 'Politique des Cookies',
+                'footer.rights': 'Tous droits réservés.'
+            },
+            en: {
+                'hero.badge': 'Leading Clinical Research in Africa',
+                'hero.title': 'Excellence in Clinical Trial Oversight',
+                'hero.subtitle': 'Independent monitoring and coordination services for pharmaceutical industries, CROs, and research institutions worldwide',
+                'hero.slogan': '"Innovating Research, Ensuring Results"',
+                'hero.cta.primary': 'Start Your Project',
+                'about.tag': 'About Us',
+                'about.title': 'Bridging Global Standards with African Excellence',
+                'about.p1': 'Acuvera Clinical is a pioneering startup dedicated to providing independent clinical trial monitoring and coordination services across the African continent. We combine international regulatory expertise with deep local knowledge.',
+                'about.p2': 'Our team of experienced professionals works with pharmaceutical companies, CROs, government agencies, and academic institutions to transform clinical research in Africa.',
+                'stats.countries': 'Countries',
+                'stats.trials': 'Trials Managed',
+                'stats.success': 'Success Rate %',
+                'services.tag': 'Our Expertise',
+                'services.title': 'Comprehensive Clinical Research Solutions',
+                'services.subtitle': 'End-to-end services designed to ensure compliance, quality, and successful outcomes',
+                'services.1.title': 'Clinical Monitoring',
+                'services.1.desc': 'On-site and remote monitoring services ensuring protocol compliance, data integrity, and patient safety across all trial phases.',
+                'services.2.title': 'Trial Coordination',
+                'services.2.desc': 'Strategic coordination of multi-center trials across African sites, managing logistics, timelines, and stakeholder communication.',
+                'services.3.title': 'Quality Assurance',
+                'services.3.desc': 'Rigorous QA/QC processes, audit support, and regulatory compliance ensuring adherence to ICH-GCP and local regulations.',
+                'services.4.title': 'Regulatory Affairs',
+                'services.4.desc': 'Expert navigation of African regulatory landscapes, ethics committee submissions, and approval processes.',
+                'services.5.title': 'Site Management',
+                'services.5.desc': 'Selection, qualification, and management of clinical trial sites with established networks across 15+ African countries.',
+                'services.6.title': 'Data Management',
+                'services.6.desc': 'Advanced data collection, validation, and management systems ensuring accurate, timely, and compliant trial data.',
+                'services.learn': 'Learn More',
+                'visits.tag': 'Our Site Visits',
+                'visits.title': 'Our Partner Research Centers',
+                'visits.subtitle': 'Leading health institutions across Africa',
+                'visits.note': 'More sites are being qualified. Contact us for further information.',
+                'therapeutic.tag': 'Therapeutic Expertise',
+                'therapeutic.title': 'Areas of Excellence',
+                'therapeutic.subtitle': 'We cover a wide range of pathologies with a personalized approach',
+                'therapeutic.card1.title': 'Cardiology',
+                'therapeutic.card1.desc': 'Clinical trials in hypertension, heart failure, coronary artery disease.',
+                'therapeutic.card2.title': 'Infectious Diseases',
+                'therapeutic.card2.desc': 'HIV/AIDS, tuberculosis, malaria, hepatitis, and neglected tropical diseases.',
+                'therapeutic.card3.title': 'Neurology',
+                'therapeutic.card3.desc': 'Epilepsy, neurodegenerative diseases, movement disorders.',
+                'therapeutic.card4.title': 'Pulmonology',
+                'therapeutic.card4.desc': 'Asthma, COPD, respiratory infections, tuberculosis.',
+                'therapeutic.card5.title': 'Pediatrics',
+                'therapeutic.card5.desc': 'Child health, malnutrition, pediatric infectious diseases.',
+                'therapeutic.card6.title': 'Women\'s Health',
+                'therapeutic.card6.desc': 'Pregnancy, maternal health, gynecological oncology.',
+                'africa.tag': 'Geographic Coverage',
+                'africa.title': 'Pan-African Presence',
+                'africa.subtitle': 'Strategic footprint in key African regions',
+                'africa.1.title': 'West Africa',
+                'africa.1.desc': 'Senegal, Côte d\'Ivoire, Ghana, Nigeria',
+                'africa.2.title': 'East Africa',
+                'africa.2.desc': 'Kenya, Uganda, Tanzania, Ethiopia',
+                'africa.3.title': 'Southern Africa',
+                'africa.3.desc': 'South Africa, Botswana, Zambia',
+                'africa.4.title': 'North Africa',
+                'africa.4.desc': 'Morocco, Egypt, Tunisia',
+                'quality.tag': 'Quality & Compliance',
+                'quality.title': 'Our Quality Commitment',
+                'quality.subtitle': 'Rigorous standards to ensure the integrity and reliability of your trials',
+                'quality.1.title': 'International Certifications',
+                'quality.1.desc': 'We adhere to ICH-GCP, ISO 9001, and good clinical practices.',
+                'quality.2.title': 'Risk Management',
+                'quality.2.desc': 'A proactive approach to identify, assess, and mitigate risks throughout the trial.',
+                'quality.3.title': 'Internal Audits',
+                'quality.3.desc': 'Regular audits to ensure compliance and continuous improvement.',
+                'quality.4.title': 'Data Protection',
+                'quality.4.desc': 'Compliance with GDPR and local data protection laws.',
+                'policies.tag': 'Our Policies',
+                'policies.title': 'Ethical & Regulatory Commitments',
+                'policies.subtitle': 'Fundamental principles guiding our daily actions',
+                'policies.1.title': 'Anti‑Corruption',
+                'policies.1.desc': 'Zero‑tolerance policy towards corruption, compliance with international anti‑corruption laws.',
+                'policies.2.title': 'Anti‑Bribery',
+                'policies.2.desc': 'Strict procedures to prevent and detect any bribery act.',
+                'policies.3.title': 'Whistleblowing',
+                'policies.3.desc': 'Secure system to report any unethical behavior.',
+                'policies.4.title': 'Code of Ethics',
+                'policies.4.desc': 'A reference framework of values and expected behaviors at Acuvera Clinical.',
+                'policies.5.title': 'Safeguarding',
+                'policies.5.desc': 'Protection of vulnerable populations and clinical trial participants.',
+                'policies.6.title': 'Data Protection',
+                'policies.6.desc': 'Commitment to confidentiality and security of personal data.',
+                'policies.7.title': 'Carbon Reduction Plan',
+                'policies.7.desc': 'Our strategy to minimize environmental impact across all activities.',
+                'policies.badge': 'Document available',
+                'policies.note': 'These documents are available upon request. Contact us to access them.',
+                'careers.tag': 'Careers',
+                'careers.title': 'Join Our Team',
+                'careers.subtitle': 'We are looking for passionate talents in clinical research in Africa',
+                'careers.desc': 'Acuvera Clinical offers a dynamic and multicultural environment where innovation and excellence are at the core of our values. We regularly hire clinical research professionals, data managers, regulators, and quality assurance experts.',
+                'careers.cta': 'Send your application to careers@acuveraclinical.com and join a team shaping the future of healthcare in Africa.',
+                'careers.button': 'Apply Now',
+                'contact.tag': 'Get in Touch',
+                'contact.title': 'Let\'s Discuss Your Next Clinical Trial',
+                'contact.desc': 'Ready to elevate your clinical research in Africa? Our team is here to provide tailored solutions.',
+                'contact.address.label': 'Headquarters',
+                'contact.address.value': 'Dakar, Senegal | Pan-African Operations',
+                'contact.email.label': 'Email',
+                'form.name': 'Full Name',
+                'form.email': 'Email Address',
+                'form.company': 'Company/Organization',
+                'form.message': 'Message',
+                'form.submit': 'Send Message',
+                'form.error.name': 'Please enter your full name.',
+                'form.error.email': 'Please enter a valid email address.',
+                'form.error.company': 'Please enter your organization.',
+                'form.error.message': 'Message must be at least 10 characters.',
+                'nav.home': 'Home',
+                'nav.about': 'About',
+                'nav.services': 'Services',
+                'nav.visits': 'Visits',
+                'nav.therapeutic': 'Expertise',
+                'nav.geographic': 'Coverage',
+                'nav.quality': 'Quality',
+                'nav.policies': 'Policies',
+                'nav.careers': 'Careers',
+                'nav.contact': 'Contact',
+                'footer.desc': 'Innovating Research, Ensuring Results. Your trusted partner for clinical trial excellence across Africa.',
+                'footer.services': 'Services',
+                'footer.company': 'Company',
+                'footer.legal': 'Legal',
+                'footer.link1': 'Clinical Monitoring',
+                'footer.link2': 'Trial Coordination',
+                'footer.link3': 'Quality Assurance',
+                'footer.link4': 'Regulatory Affairs',
+                'footer.link5': 'About Us',
+                'footer.link6': 'Careers',
+                'footer.link7': 'Policies',
+                'footer.link8': 'Contact',
+                'footer.link9': 'Privacy Policy',
+                'footer.link10': 'Terms of Service',
+                'footer.link11': 'Cookie Policy',
+                'footer.rights': 'All rights reserved.'
+            }
+        };
+
+        let currentLang = 'fr';
+        let currentTheme = 'light';
+
+        // =========================================
+        // 2. LANGUE
+        // =========================================
+        function changeLang(lang) {
+            if (lang === currentLang) return;
+            currentLang = lang;
+            const switchEl = document.getElementById('langSwitch');
+            switchEl.style.transition = 'all 0.3s ease';
+            switchEl.style.transform = 'scale(0.9)';
+            switchEl.style.opacity = '0.5';
+            switchEl.style.boxShadow = '0 0 20px rgba(0,85,164,0.5)';
+
+            setTimeout(() => {
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+                });
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+                document.documentElement.lang = lang;
+                switchEl.style.transform = 'scale(1)';
+                switchEl.style.opacity = '1';
+                switchEl.style.boxShadow = 'none';
+            }, 300);
+        }
+
+        // =========================================
+        // 3. THÈME
+        // =========================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed; inset: 0; background: var(--bg-primary);
+                z-index: 9998; clip-path: circle(0% at center);
+                transition: clip-path 0.8s cubic-bezier(0.4,0,0.2,1);
+                pointer-events: none;
+            `;
+            document.body.appendChild(overlay);
+            requestAnimationFrame(() => { overlay.style.clipPath = 'circle(100% at center)'; });
+            setTimeout(() => {
+                if (currentTheme === 'light') {
+                    html.setAttribute('data-theme', 'dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    currentTheme = 'dark';
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    currentTheme = 'light';
+                }
+                overlay.style.transition = 'opacity 0.4s ease';
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 500);
+            }, 900);
+        }
+
+        // =========================================
+        // 4. HERO MULTI-SLIDES
+        // =========================================
+        let heroIndex = 0;
+        const heroTotal = 3;
+        const HERO_DURATION = 7000; // ms par slide
+        let heroProgressInterval = null;
+        let heroAutoTimer = null;
+        let heroProgressStart = null;
+
+        function moveHeroSlide(dir) {
+            heroIndex = (heroIndex + dir + heroTotal) % heroTotal;
+            showHeroSlide(heroIndex);
+        }
+
+        function showHeroSlide(idx) {
+            document.querySelectorAll('.hero-slide').forEach((s, i) => {
+                s.classList.toggle('active', i === idx);
+            });
+            document.querySelectorAll('.h-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === idx);
+            });
+            restartHeroProgress();
+        }
+
+        function restartHeroProgress() {
+            const bar = document.getElementById('heroProgressFill');
+            if (!bar) return;
+            clearInterval(heroProgressInterval);
+            clearTimeout(heroAutoTimer);
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            requestAnimationFrame(() => {
+                bar.style.transition = `width ${HERO_DURATION}ms linear`;
+                bar.style.width = '100%';
+            });
+            heroAutoTimer = setTimeout(() => {
+                heroIndex = (heroIndex + 1) % heroTotal;
+                showHeroSlide(heroIndex);
+            }, HERO_DURATION);
+        }
+
+        // Init dot clicks
+        document.querySelectorAll('.h-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                heroIndex = parseInt(dot.dataset.hslide);
+                showHeroSlide(heroIndex);
+            });
+        });
+
+        // Start on load
+        window.addEventListener('load', () => restartHeroProgress());
+
+        // =========================================
+        // 4b. CARROUSEL ABOUT (4 slides)
+        // =========================================
+        let slideIndex = 0;
+        const totalSlides = 4;
+        function moveSlide(dir) {
+            slideIndex = (slideIndex + dir + totalSlides) % totalSlides;
+            updateSlider();
+        }
+        function updateSlider() {
+            const wrapper = document.getElementById('sliderWrapper');
+            wrapper.style.transform = `translateX(-${slideIndex * 25}%)`;
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === slideIndex);
+            });
+        }
+        let autoSlide = setInterval(() => moveSlide(1), 5000);
+        document.querySelector('.slider-container').addEventListener('mouseenter', () => clearInterval(autoSlide));
+        document.querySelector('.slider-container').addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => moveSlide(1), 5000);
+        });
+        document.querySelectorAll('.dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                slideIndex = parseInt(dot.dataset.index);
+                updateSlider();
+                clearInterval(autoSlide);
+                autoSlide = setInterval(() => moveSlide(1), 5000);
+            });
+        });
+
+        // =========================================
+        // 5. DRAWER (remplace les modals)
+        // =========================================
+        const serviceData = {
+            s1: {
+                icon: 'fa-clipboard-check',
+                title: 'Monitoring Clinique',
+                headline: 'Une surveillance rigoureuse pour des essais irréprochables.',
+                body: 'Nos Clinical Research Associates (CRA) assurent une surveillance rigoureuse sur site et à distance. Chaque visite est documentée selon des SOPs strictes alignées sur ICH-GCP E6(R3). Nous garantissons l\u2019intégrité des données, la sécurité des participants et la conformité au protocole à chaque étape.',
+                benefits: ['Vérification des données sources (SDV) 100%', 'Rapports de monitoring détaillés sous 48h', 'Monitoring hybride (site + distance)', 'Gestion proactive des déviations'],
+                kpis: [{ v: '98%', l: 'Protocol Compliance' }, { v: '48h', l: 'Rapport post-visite' }]
+            },
+            s2: {
+                icon: 'fa-project-diagram',
+                title: "Coordination d'Essais",
+                headline: 'De la faisabilité au rapport final, sans rupture.',
+                body: "Nous gérons la complexité logistique des essais multicentriques africains. Gestion des fournisseurs, coordination des investigateurs, suivi des recrutements et respect des échéances — tout est orchestré par notre équipe de chefs de projet expérimentés.",
+                benefits: ['Plans de gestion de projet sur mesure', 'Gestion des contrats et budgets', 'Communication sponsor-site fluide', 'Tableaux de bord en temps réel'],
+                kpis: [{ v: '15+', l: 'Pays coordinés' }, { v: '-30%', l: 'Réduction des délais' }]
+            },
+            s3: {
+                icon: 'fa-shield-alt',
+                title: 'Assurance Qualité',
+                headline: 'Zéro non-conformité. Zéro compromis.',
+                body: 'Notre équipe AQ indépendante réalise des audits approfondis de vos sites, processus et TMF. Nous préparons vos équipes aux inspections des autorités réglementaires (FDA, EMA, ANRP) et mettons en place des systèmes CAPA robustes.',
+                benefits: ['Audits de sites investigateurs', 'Préparation aux inspections FDA/EMA', 'Développement et revue des SOPs', 'Gestion des CAPA'],
+                kpis: [{ v: '0', l: 'Non-conformités majeures' }, { v: 'ICH-GCP', l: 'E6(R3) Ready' }]
+            },
+            s4: {
+                icon: 'fa-file-medical-alt',
+                title: 'Affaires Réglementaires',
+                headline: 'Navigation experte dans chaque paysage réglementaire africain.',
+                body: 'Chaque pays africain possède ses spécificités réglementaires. Nous maisons une expertise locale dans 12+ pays pour accélérer vos soumissions aux comités d\'\u00e9thique et autorités de santé, tout en garantissant la conformité internationale.',
+                benefits: ['Stratégie réglementaire multi-pays', 'Soumissions aux comités d\'\u00e9thique', 'Suivi des approbations', 'Gestion des amendements'],
+                kpis: [{ v: '12+', l: 'Pays couverts' }, { v: '3 sem.', l: 'Délai moyen soumission' }]
+            },
+            s5: {
+                icon: 'fa-users',
+                title: 'Gestion de Sites',
+                headline: 'Un réseau de sites pré-qualifiés, prêts à recruter.',
+                body: 'Nous sélectionnons et qualifions les meilleurs centres investigateurs africains selon des critères stricts. Notre réseau couvre 50+ sites dans 15 pays, avec un suivi continu des performances de recrutement et de la qualité des données.',
+                benefits: ['\u00c9tudes de faisabilité approfondies', 'Formation du personnel des sites', 'Stratégies de recrutement patients', 'Suivi des performances'],
+                kpis: [{ v: '50+', l: 'Sites qualifiés' }, { v: '15', l: 'Pays' }]
+            },
+            s6: {
+                icon: 'fa-chart-line',
+                title: 'Gestion des Données',
+                headline: "Des données propres, fiables, analysables.",
+                body: "Nous concevons et opérons des systèmes de gestion de données performants (EDC, paper-based). Notre équipe data-management assure la validation, le nettoyage et la préparation des bases pour l'analyse statistique — avec 99.9% de précision.",
+                benefits: ['Conception eCRF et plan de validation', 'Gestion des queries en temps réel', 'Codage médical (MedDRA, WHO-DD)', 'Gel et transfert de la base'],
+                kpis: [{ v: '99.9%', l: 'Data Accuracy' }, { v: 'EDC', l: 'Real-time' }]
+            }
+        };
+
+        function openDrawer(serviceId) {
+            const data = serviceData[serviceId];
+            if (!data) return;
+            const content = document.getElementById('drawerContent');
+            content.innerHTML = `
+                <div class="drawer-header">
+                    <div class="drawer-icon"><i class="fas ${data.icon}"></i></div>
+                    <div class="drawer-title">${data.title}</div>
+                    <div class="drawer-headline">${data.headline}</div>
+                </div>
+                <div class="drawer-body">
+                    <p>${data.body}</p>
+                </div>
+                <div class="drawer-benefits">
+                    <h4>Points clés</h4>
+                    ${data.benefits.map(b => `<div class="drawer-benefit-item"><i class="fas fa-check-circle"></i>${b}</div>`).join('')}
+                </div>
+                <div class="drawer-kpis">
+                    ${data.kpis.map(k => `<div class="drawer-kpi"><span class="drawer-kpi-value">${k.v}</span><div class="drawer-kpi-label">${k.l}</div></div>`).join('')}
+                </div>
+                <a href="https://wa.me/237655519536?text=Bonjour%2C%20je%20souhaite%20discuter%20du%20service%20${encodeURIComponent(data.title)}." target="_blank" class="btn btn-primary drawer-cta">
+                    <i class="fab fa-whatsapp"></i> Discuter de ce service
+                </a>`;
+            document.getElementById('serviceDrawer').classList.add('open');
+            document.getElementById('drawerBackdrop').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            document.getElementById('serviceDrawer').classList.remove('open');
+            document.getElementById('drawerBackdrop').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') { closeDrawer(); closeLegalDrawer(); }
+        });
+
+        // =========================================
+        // 5b. LEGAL DRAWER
+        // =========================================
+        const legalContent = {
+            privacy: {
+                title: 'Politique de Confidentialité',
+                date: 'Dernière mise à jour : 1er janvier 2026',
+                html: `
+                    <h3>1. Responsable du Traitement</h3>
+                    <p>Acuvera Clinical, startup enregistrée au Sénégal, est responsable du traitement de vos données personnelles. Contact : <strong>privacy@acuveraclinical.com</strong></p>
+                    <h3>2. Données collectées</h3>
+                    <ul>
+                        <li>Données d'identification (nom, prénom, email, organisation)</li>
+                        <li>Données de navigation (cookies analytiques, adresse IP anonymisée)</li>
+                        <li>Données de communication (messages envoyés via le formulaire de contact)</li>
+                    </ul>
+                    <h3>3. Finalités du traitement</h3>
+                    <ul>
+                        <li>Répondre à vos demandes de renseignements</li>
+                        <li>Améliorer l'expérience utilisateur sur notre site</li>
+                        <li>Respecter nos obligations légales et réglementaires</li>
+                    </ul>
+                    <h3>4. Base légale</h3>
+                    <p>Le traitement est fondé sur votre consentement et/ou notre intérêt légitime à communiquer avec nos partenaires professionnels.</p>
+                    <h3>5. Conservation des données</h3>
+                    <p>Vos données sont conservées pendant une durée maximale de 3 ans à compter de votre dernière interaction avec nous.</p>
+                    <h3>6. Vos droits</h3>
+                    <p>Conformément au RGPD et aux lois locales applicables, vous disposez d'un droit d'accès, de rectification, d'effacement, de portabilité et d'opposition. Exercez ces droits à : <strong>privacy@acuveraclinical.com</strong></p>
+                    <h3>7. Sécurité</h3>
+                    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou divulgation.</p>`
+            },
+            terms: {
+                title: "Conditions Générales d'Utilisation",
+                date: 'En vigueur depuis le 1er janvier 2026',
+                html: `
+                    <h3>1. Objet</h3>
+                    <p>Les présentes conditions générales régissent l'utilisation du site web d'Acuvera Clinical. En accédant à ce site, vous acceptez ces conditions dans leur intégralité.</p>
+                    <h3>2. Propriété intellectuelle</h3>
+                    <p>L'ensemble des contenus présents sur ce site (textes, images, vidéos, logo) sont protégés par le droit d'auteur et appartiennent exclusivement à Acuvera Clinical. Toute reproduction, même partielle, est interdite sans autorisation écrite préalable.</p>
+                    <h3>3. Limitation de responsabilité</h3>
+                    <p>Acuvera Clinical s'efforce de maintenir les informations à jour et exactes. Toutefois, la société ne saurait être tenue responsable d'éventuelles erreurs, omissions ou résultats obtenus suite à une mauvaise utilisation des informations.</p>
+                    <h3>4. Liens externes</h3>
+                    <p>Ce site peut contenir des liens vers des sites tiers. Acuvera Clinical n'est pas responsable du contenu de ces sites externes.</p>
+                    <h3>5. Droit applicable</h3>
+                    <p>Les présentes conditions sont soumises au droit sénégalais. Tout litige sera soumis à la compétence des juridictions de Dakar, Sénégal.</p>
+                    <h3>6. Modifications</h3>
+                    <p>Acuvera Clinical se réserve le droit de modifier ces conditions à tout moment. La date de dernière mise à jour sera indiquée en haut du document.</p>`
+            },
+            cookies: {
+                title: 'Politique des Cookies',
+                date: 'Dernière mise à jour : 1er janvier 2026',
+                html: `
+                    <h3>Qu'est-ce qu'un cookie ?</h3>
+                    <p>Un cookie est un petit fichier texte déposé sur votre appareil lors de la visite d'un site web. Il permet de mémoriser vos préférences et d'améliorer votre expérience de navigation.</p>
+                    <h3>Cookies utilisés sur ce site</h3>
+                    <ul>
+                        <li><strong>Cookies fonctionnels :</strong> mémorisent votre préférence de langue et de thème (clair/sombre). Durée : session + 30 jours.</li>
+                        <li><strong>Cookies analytiques :</strong> mesurent l'audience du site de façon anonymisée (nombre de visiteurs, pages vues). Durée : 13 mois.</li>
+                    </ul>
+                    <h3>Aucun cookie publicitaire</h3>
+                    <p>Acuvera Clinical n'utilise aucun cookie à des fins publicitaires ou de suivi comportemental inter-sites.</p>
+                    <h3>Gestion de vos préférences</h3>
+                    <p>Vous pouvez à tout moment désactiver les cookies via les paramètres de votre navigateur. Notez que la désactivation des cookies fonctionnels peut altérer votre expérience sur le site.</p>
+                    <h3>Contact</h3>
+                    <p>Pour toute question relative aux cookies : <strong>privacy@acuveraclinical.com</strong></p>`
+            }
+        };
+
+        function openLegalDrawer(type) {
+            const data = legalContent[type];
+            if (!data) return;
+            document.getElementById('legalDrawerContent').innerHTML = `
+                <h2>${data.title}</h2>
+                <p class="legal-date">${data.date}</p>
+                ${data.html}`;
+            document.getElementById('legalDrawer').classList.add('open');
+            document.getElementById('legalBackdrop').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLegalDrawer() {
+            document.getElementById('legalDrawer').classList.remove('open');
+            document.getElementById('legalBackdrop').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+
+        // =========================================
+        // 6. COMPTEURS easeOutExpo
+        // =========================================
+        function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+        function animateCounter(el, target, suffix, duration) {
+            const start = performance.now();
+            function update(now) {
+                const p = Math.min((now - start) / duration, 1);
+                el.textContent = Math.round(easeOutExpo(p) * target) + (p >= 1 ? suffix : '');
+                if (p < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
+        const counters = document.querySelectorAll('[data-count]');
+        let counted = false;
+        function animateCounters() {
+            if (counted) return;
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.count);
+                const suffix = counter.dataset.suffix || (target === 98 ? '%' : '+');
+                animateCounter(counter, target, suffix, 2200);
+            });
+            counted = true;
+        }
+
+        // =========================================
+        // 7. REVEAL avancé (stagger + multi-classes) + COMPTEURS
+        // =========================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = parseInt(entry.target.dataset.delay || 0);
+                    setTimeout(() => entry.target.classList.add('active'), delay);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        ['reveal', 'reveal-left', 'reveal-right', 'reveal-scale'].forEach(cls => {
+            document.querySelectorAll('.' + cls).forEach(el => revealObserver.observe(el));
+        });
+
+        // Stagger sur les grilles
+        document.querySelectorAll('.services-grid .service-card, .visits-grid .visit-card').forEach((el, i) => {
+            el.dataset.delay = i * 80;
+        });
+
+        // Compteurs déclenchés quand visible
+        const counterObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) { animateCounters(); counterObserver.disconnect(); }
+        }, { threshold: 0.3 });
+        const aboutSection = document.querySelector('.about');
+        if (aboutSection) counterObserver.observe(aboutSection);
+
+        // Parallax Hero
+        window.addEventListener('scroll', () => {
+            const overlay = document.querySelector('.hero-overlay');
+            if (overlay && window.scrollY < window.innerHeight)
+                overlay.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+        }, { passive: true });
+
+        window.addEventListener('load', () => setTimeout(() => {
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+                const r = el.getBoundingClientRect();
+                if (r.top < window.innerHeight - 50) {
+                    const d = parseInt(el.dataset.delay || 0);
+                    setTimeout(() => el.classList.add('active'), d);
+                }
+            });
+        }, 100));
+
+        // =========================================
+        // 8. HERO PARTICULES
+        // =========================================
+        (function createParticles() {
+            const hero = document.querySelector('.hero');
+            if (!hero) return;
+            for (let i = 0; i < 18; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'hero-particle';
+                dot.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;animation-delay:${Math.random() * 6}s;animation-duration:${6 + Math.random() * 10}s;width:${2 + Math.random() * 4}px;height:${2 + Math.random() * 4}px;`;
+                hero.appendChild(dot);
+            }
+        })();
+
+        // =========================================
+        // 9. BOUTONS PREMIUM (magnetic + ripple)
+        // =========================================
+        document.querySelectorAll('.btn-primary, .btn-whatsapp').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const r = btn.getBoundingClientRect();
+                const x = (e.clientX - r.left - r.width / 2) * 0.12;
+                const y = (e.clientY - r.top - r.height / 2) * 0.12;
+                btn.style.transform = `translate(${x}px,${y}px) scale(1.04)`;
+            });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+            btn.addEventListener('click', e => {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const sz = Math.max(btn.clientWidth, btn.clientHeight);
+                ripple.style.cssText = `width:${sz}px;height:${sz}px;left:${e.offsetX - sz / 2}px;top:${e.offsetY - sz / 2}px;`;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 700);
+            });
+        });
+
+        // Ancien scroll handler (garde la navbar)
+        function handleReveal() { } // no-op, replaced by IntersectionObserver
+
+        // =========================================
+        // CAROUSEL & VISITS MODAL
+        // =========================================
+        function openVisitModal(title, location, desc, imageSrc) {
+            document.getElementById('vModalTitle').textContent = title;
+            const mapQuery = encodeURIComponent(location);
+            const mapHtml = `<iframe width="100%" height="250" frameborder="0" style="border:0; border-radius:12px; margin-top: 15px;" src="https://maps.google.com/maps?q=${mapQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>`;
+
+            document.getElementById('vModalContent').innerHTML = `
+                <div style="display:flex; flex-direction: column; gap: 15px;">
+                    <img src="${imageSrc}" style="width:100%; height: 200px; object-fit: cover; border-radius: 12px;" />
+                    <p style="font-size: 1.1rem; color: var(--text-primary); font-weight: 500; margin: 0;"><i class="fas fa-map-marker-alt" style="color:var(--secondary-blue);"></i> ${location}</p>
+                    <p style="color: var(--text-secondary); line-height: 1.7; margin: 0;">${desc}</p>
+                    ${mapHtml}
+                </div>
+            `;
+            document.getElementById('visitModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Pause carousel auto-scroll when modal is open
+            clearInterval(visitsCarouselInterval);
+        }
+
+        function closeVisitModal(e) {
+            if (e && e.target.id !== 'visitModalOverlay') return;
+            document.getElementById('visitModalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            startVisitsCarousel(); // resume
+        }
+
+        function closeVisitModalBtn() {
+            document.getElementById('visitModalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            startVisitsCarousel(); // resume
+        }
+
+        // Auto scroll
+        let visitsCarouselInterval;
+        function startVisitsCarousel() {
+            clearInterval(visitsCarouselInterval);
+            const track = document.getElementById('visitsCarousel');
+            if (!track) return;
+            visitsCarouselInterval = setInterval(() => {
+                const scrollAmount = track.offsetWidth > 600 ? 340 : track.offsetWidth;
+                if (track.scrollLeft + track.offsetWidth >= track.scrollWidth - 10) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' }); // rewind
+                } else {
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }, 3500);
+        }
+
+        window.addEventListener('load', () => {
+            startVisitsCarousel();
+            const track = document.getElementById('visitsCarousel');
+            if (track) {
+                track.addEventListener('mouseenter', () => clearInterval(visitsCarouselInterval));
+                track.addEventListener('mouseleave', startVisitsCarousel);
+                track.addEventListener('touchstart', () => clearInterval(visitsCarouselInterval));
+                track.addEventListener('touchend', startVisitsCarousel);
+            }
+        });
+
+        // =========================================
+        // 8. NAVBAR & MOBILE
+        // =========================================
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navOverlay = document.getElementById('navOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMobileMenu);
+        closeMenu.addEventListener('click', toggleMobileMenu);
+        navOverlay.addEventListener('click', toggleMobileMenu);
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+
+        // =========================================
+        // 9. FORMULAIRE
+        // =========================================
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            const name = document.getElementById('fullName');
+            const email = document.getElementById('emailAddr');
+            const company = document.getElementById('companyName');
+            const message = document.getElementById('msgContent');
+
+            document.querySelectorAll('.form-group').forEach(g => g.classList.remove('invalid'));
+
+            if (name.value.trim().length < 2) {
+                document.getElementById('nameGroup').classList.add('invalid');
+                isValid = false;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                document.getElementById('emailGroup').classList.add('invalid');
+                isValid = false;
+            }
+            if (company.value.trim().length < 2) {
+                document.getElementById('companyGroup').classList.add('invalid');
+                isValid = false;
+            }
+            if (message.value.trim().length < 10) {
+                document.getElementById('messageGroup').classList.add('invalid');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                const msg = currentLang === 'fr' ? 'Veuillez corriger les champs en rouge.' : 'Please correct the fields in red.';
+                const notif = document.createElement('div');
+                notif.className = 'notification error';
+                notif.innerHTML = `<i class="fas fa-exclamation-circle"></i><span>${msg}</span>`;
+                document.body.appendChild(notif);
+                setTimeout(() => {
+                    notif.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => notif.remove(), 500);
+                }, 3000);
+                return;
+            }
+
+            const msg = currentLang === 'fr' ? 'Message envoyé avec succès !' : 'Message sent successfully!';
+            const notif = document.createElement('div');
+            notif.className = 'notification success';
+            notif.innerHTML = `<i class="fas fa-check-circle"></i><span>${msg}</span>`;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => notif.remove(), 500);
+            }, 3000);
+            e.target.reset();
+            document.querySelectorAll('.form-group').forEach(g => g.classList.remove('invalid'));
+        });
+
+        // =========================================
+        // 10. LOADER
+        // =========================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // =========================================
+        // 11. SMOOTH SCROLL
+        // =========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>
