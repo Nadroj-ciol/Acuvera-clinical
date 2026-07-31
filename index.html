@@ -173,7 +173,7 @@
         }
 
         .navbar.scrolled {
-            background: rgba(var(--bg-primary), 0.95);
+            background: var(--bg-primary);
             backdrop-filter: blur(20px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             padding: 0.8rem 5%;
@@ -230,8 +230,12 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--text-primary);
+            color: #ffffff;
             letter-spacing: -0.3px;
+        }
+        
+        .navbar.scrolled .logo-title {
+            color: var(--text-primary);
         }
 
         .logo-subtitle {
@@ -1253,7 +1257,7 @@
         /* ===== SERVICES ===== */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -2194,12 +2198,13 @@
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 4rem;
             margin-bottom: 4rem;
         }
 
         .footer-brand .logo-text .logo-title {
-            color: #fff;
+            color: #ffffff;
         }
 
         .footer-brand p {
