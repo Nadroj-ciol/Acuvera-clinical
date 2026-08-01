@@ -2795,8 +2795,25 @@
 
             /* --- Hero --- */
             .hero-slide-inner {
-                padding: 0 6%;
+                padding: 0 16%;
                 max-width: 100%;
+            }
+
+            /* Flèches du carousel hero : plus petites, déplacées vers le bas */
+            .hero-nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.75rem;
+                top: auto;
+                bottom: 80px;
+                transform: none;
+            }
+
+            .hero-nav-btn.prev { left: 1rem; }
+            .hero-nav-btn.next { right: 1rem; }
+
+            .hero-nav-btn:hover {
+                transform: scale(1.08);
             }
 
             .hs-title {
