@@ -2748,93 +2748,151 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE — Tablette ===== */
         @media (max-width: 1024px) {
-
             .about-grid,
             .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-
-            .africa-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .features-list {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
+            .africa-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .features-list { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
         }
 
+        /* ===== RESPONSIVE — Mobile ≤ 768px ===== */
         @media (max-width: 768px) {
-            .nav-controls {
-                gap: 0.8rem;
+
+            /* --- Navbar --- */
+            .navbar { padding: 0.9rem 4%; }
+
+            .navbar.scrolled { padding: 0.7rem 4%; }
+
+            /* Masquer le switcher de langue sur mobile — accessible via menu hamburger */
+            .lang-switch { display: none; }
+
+            /* Réduire le toggle thème */
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
             }
 
-            .lang-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
+            /* Logo plus compact */
+            .logo-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+            .logo-img  { width: 38px !important; height: 38px !important; }
+            .logo-title { font-size: 1.1rem; }
+            .logo-subtitle { display: none; }
+
+            /* --- Splash screen --- */
+            .loader-ring { width: 260px; height: 260px; }
+            .loader-halo { width: 400px; height: 400px; }
+            .loader-name { font-size: 1.8rem; }
+            .loader-stats { gap: 1.2rem; }
+            .loader-stat-value { font-size: 1.3rem; }
+
+            /* --- Hero --- */
+            .hero-slide-inner {
+                padding: 0 6%;
+                max-width: 100%;
             }
 
-            .stats-grid {
+            .hs-title {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+
+            .hs-sub {
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+            }
+
+            .hs-cta-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hs-cta-row .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .hs-link {
+                font-size: 0.9rem;
+            }
+
+            /* --- Sections générales --- */
+            section { padding: 4rem 5%; }
+
+            .section-title {
+                font-size: clamp(1.8rem, 6vw, 2.5rem);
+            }
+
+            /* --- Stats grid (about) --- */
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+            /* --- Services --- */
+            .services-grid {
                 grid-template-columns: 1fr;
             }
 
-            .africa-grid {
-                grid-template-columns: 1fr;
-            }
+            /* --- Carousel visites --- */
+            .slider-container { height: 280px; }
+            .visits-carousel-track { gap: 1rem; }
+            .visit-card { flex: 0 0 calc(100% - 1rem); }
 
+            /* --- Afrique --- */
+            .africa-grid { grid-template-columns: 1fr; }
+
+            /* --- Footer --- */
             .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
-            section {
-                padding: 5rem 5%;
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.2rem;
             }
 
-            .slider-container {
-                height: 300px;
-            }
+            .social-links { justify-content: center; }
 
-            .modal {
-                padding: 2rem 1.5rem;
-            }
+            /* --- Policies --- */
+            .policies-grid { grid-template-columns: 1fr; }
 
-            .policies-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .visits-carousel-track {
-                gap: 1rem;
-            }
-
-            .visit-card {
-                flex: 0 0 calc(100% - 1rem);
-            }
+            /* --- Modal --- */
+            .modal { padding: 2rem 1.5rem; }
         }
 
+        /* ===== RESPONSIVE — Petit mobile ≤ 480px ===== */
         @media (max-width: 480px) {
-            .slider-container {
-                height: 220px;
-            }
 
-            .slider-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
+            /* Navbar encore plus compact */
+            .navbar { padding: 0.8rem 4%; }
+            .logo-title { font-size: 1rem; }
+
+            /* Hero */
+            .hs-eyebrow { font-size: 0.7rem; letter-spacing: 2px; padding: 0.4rem 0.9rem; }
+            .hs-title { font-size: clamp(1.8rem, 9vw, 2.5rem); }
+            .hs-sub { font-size: 0.88rem; }
+
+            /* Slider */
+            .slider-container { height: 220px; }
+            .slider-btn { width: 35px; height: 35px; font-size: 1rem; }
+
+            /* Stats 2 colonnes → 1 colonne sur très petit écran */
+            .stats-grid { grid-template-columns: 1fr; }
+
+            /* Boutons */
+            .btn { padding: 0.85rem 1.8rem; font-size: 0.88rem; }
+
+            /* Splash screen très petit */
+            .loader-stats { gap: 0.8rem; }
+            .loader-bar-wrap { width: 160px; }
         }
     </style>
 </head>
@@ -3061,7 +3119,7 @@
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-count="98">0</span>
-                            <span class="stat-label" data-i18n="stats.success">Taux de Succès %</span>
+                            <span class="stat-label" data-i18n="stats.success">Taux de Succès</span>
                         </div>
                     </div>
                 </div>
@@ -3779,7 +3837,7 @@
                 'about.p2': 'Notre équipe de professionnels expérimentés travaille avec les entreprises pharmaceutiques, CRO, agences gouvernementales et institutions académiques pour transformer la recherche clinique en Afrique.',
                 'stats.countries': 'Pays',
                 'stats.trials': 'Essais Gérés',
-                'stats.success': 'Taux de Succès %',
+                'stats.success': 'Taux de Succès',
                 'services.tag': 'Notre Expertise',
                 'services.title': 'Solutions Complètes de Recherche Clinique',
                 'services.subtitle': 'Des services de bout en bout pour assurer conformité, qualité et résultats probants',
