@@ -141,79 +141,223 @@
             color: inherit;
         }
 
-        /* ===== LOADER ===== */
+        /* ===== SPLASH SCREEN ===== */
         .loader {
             position: fixed;
             inset: 0;
-            background: var(--primary-blue);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease;
+            overflow: hidden;
+            background-color: #020d1f;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
         .loader.hidden {
             opacity: 0;
+            visibility: hidden;
             pointer-events: none;
         }
 
-        .loader-content {
-            text-align: center;
+        /* Grille médicale animée en fond */
+        .loader-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 85, 164, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 85, 164, 0.12) 1px, transparent 1px);
+            background-size: 48px 48px;
+            animation: loader-grid-move 8s linear infinite;
         }
 
-        .loader-logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-            letter-spacing: 1px;
+        @keyframes loader-grid-move {
+            0%   { background-position: 0 0; }
+            100% { background-position: 48px 48px; }
         }
 
-        .loader-logo span {
-            color: var(--gold-accent);
+        /* Halo radial central */
+        .loader-halo {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 85, 164, 0.25) 0%, transparent 70%);
+            animation: loader-breathe 3s ease-in-out infinite alternate;
         }
 
-        .loader-bar {
-            width: 220px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
+        @keyframes loader-breathe {
+            from { transform: scale(0.9); opacity: 0.6; }
+            to   { transform: scale(1.1); opacity: 1; }
         }
 
-        .loader-progress {
-            width: 100%;
-            height: 100%;
+        /* Cercle rotatif décoratif */
+        .loader-ring {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 97, 0.2);
+            animation: loader-spin 12s linear infinite;
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+
+        .loader-ring-dot {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
             background: var(--gold-accent);
-            animation: load 2s ease-in-out forwards;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 12px rgba(201, 169, 97, 0.8);
         }
 
-        @keyframes load {
-            0% {
-                transform: scaleX(0);
-                transform-origin: left;
-            }
-
-            100% {
-                transform: scaleX(1);
-                transform-origin: left;
-            }
+        @keyframes loader-spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
         }
 
-        @keyframes pulse {
+        /* Contenu central */
+        .loader-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
 
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
+        /* Logo image */
+        .loader-logo-img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            margin-bottom: 1.2rem;
+            animation: loader-logo-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0;
+            filter: drop-shadow(0 0 20px rgba(0, 85, 164, 0.6));
+        }
 
-            50% {
-                transform: scale(1.05);
-                opacity: 0.8;
-            }
+        @keyframes loader-logo-in {
+            from { opacity: 0; transform: scale(0.5) translateY(10px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Nom du site */
+        .loader-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+            opacity: 0;
+            animation: loader-fade-up 0.7s ease 0.4s forwards;
+        }
+
+        .loader-name span { color: var(--gold-accent); }
+
+        /* Tagline */
+        .loader-tagline {
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(180, 215, 255, 0.7);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: loader-fade-up 0.7s ease 0.6s forwards;
+        }
+
+        /* Stats rapides */
+        .loader-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: loader-fade-up 0.7s ease 0.9s forwards;
+        }
+
+        .loader-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .loader-stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+            line-height: 1;
+        }
+
+        .loader-stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+        }
+
+        .loader-stat-sep {
+            width: 1px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            align-self: center;
+        }
+
+        /* Barre de progression */
+        .loader-bar-wrap {
+            width: 200px;
+            opacity: 0;
+            animation: loader-fade-up 0.7s ease 1.1s forwards;
+        }
+
+        .loader-bar-track {
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.6rem;
+        }
+
+        .loader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0055A4, var(--gold-accent));
+            border-radius: 2px;
+            animation: loader-fill 2.2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+        }
+
+        @keyframes loader-fill {
+            0%   { width: 0%; }
+            60%  { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        .loader-bar-label {
+            font-size: 0.65rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+        }
+
+        @keyframes loader-fade-up {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== NAVBAR ===== */
@@ -2699,10 +2843,39 @@
 
     <!-- ===== LOADER ===== -->
     <div class="loader" id="loader">
+        <!-- Fond animé -->
+        <div class="loader-grid"></div>
+        <div class="loader-halo"></div>
+        <div class="loader-ring"><div class="loader-ring-dot"></div></div>
+
+        <!-- Contenu central -->
         <div class="loader-content">
-            <div class="loader-logo">Acuvera <span>Clinical</span></div>
-            <div class="loader-bar">
-                <div class="loader-progress"></div>
+            <img src="assets/images/logo%20acuvera%20simple.png" alt="Acuvera Clinical" class="loader-logo-img" />
+            <div class="loader-name">Acuvera <span>Clinical</span></div>
+            <div class="loader-tagline">Clinical Research Organization</div>
+
+            <div class="loader-stats">
+                <div class="loader-stat">
+                    <span class="loader-stat-value">06</span>
+                    <span class="loader-stat-label">Pays</span>
+                </div>
+                <div class="loader-stat-sep"></div>
+                <div class="loader-stat">
+                    <span class="loader-stat-value">30+</span>
+                    <span class="loader-stat-label">Sites</span>
+                </div>
+                <div class="loader-stat-sep"></div>
+                <div class="loader-stat">
+                    <span class="loader-stat-value">ICH</span>
+                    <span class="loader-stat-label">GCP</span>
+                </div>
+            </div>
+
+            <div class="loader-bar-wrap">
+                <div class="loader-bar-track">
+                    <div class="loader-bar-fill"></div>
+                </div>
+                <div class="loader-bar-label">Chargement en cours…</div>
             </div>
         </div>
     </div>
